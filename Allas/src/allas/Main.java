@@ -4,16 +4,16 @@
  */
 package allas;
 
+import allas.peli.Peli;
+
 /**
  *
  * @author Sami
  */
-public class Allas {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+public class Main {
+    
+        public static void main(String[] args) {
         // TODO code application logic here
+            Peli peli = new Peli (1000, 400, 10);
     }
 }

@@ -3,7 +3,7 @@ Tuntikirjanpito
 
 P‰iv‰	Aika	Teht‰v‰
 14.5.	3h	Kurssin tietoihin perehtyminen, GitHubiin tutustuminen, aihem‰‰rittely, ohjelman toteutuksen pohdinta 
-		
+15.5.	2h	Ohjelmoinnin aloittaminen, fysiikkamoottorin suunnittelu		
 		
 		
 		

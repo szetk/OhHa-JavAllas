@@ -1,6 +1,6 @@
 Aihemäärittely
 
-Aihe: biljardipeli
+Aihe: biljardipeli (pool = allas)
 
 Kehitetään yksinkertainen pool-biljardipeli, jossa pelimuotona on ainakin 8-pallo. Peliä pelaa kaksi pelaajaa vuorotellen yleisten sääntöjen mukaisesti, eikä luultavasti tulla toteuttamaan tekoälyä. Ohjelmaan tulee yksinkertainen fysiikkamallinnus, jolla lasketaan pallojen liikeratoja. Liikkeisiin vaikuttaa ainakin törmäykset reunoihin ja palloihin sekä pöydän pinnan ja pallon välinen kitkakerroin. Myös muita vaikuttajia voidaan tarvittaessa lisätä ohjelman toiminnallisuuteen. Käyttöliittymä tulee olemaan graafinen ja kaksiulotteinen, joka on kuvattu ylhäältä. Mitä luultavimmin ohjelma ei tule myöskään sisältämään ääniefektejä eikä pallojen pyörimisen, liidun tai muiden vastaavien seikkojen tuomia vaikutuksia.
 
