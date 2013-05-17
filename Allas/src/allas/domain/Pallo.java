@@ -9,14 +9,13 @@ package allas.domain;
  * @author Sami
  */
 public class Pallo {
-    
+
     private int x; // paikka
     private int y;
     private int vx; // vauhti
     private int vy;
     private int n; // pallon numero
     private boolean pussissa;
-
 
     public Pallo(int x, int y, int n) {
         this.x = x;
@@ -27,14 +26,52 @@ public class Pallo {
         this.pussissa = false;
     }
 
-    public void pussita(){
+    public void pussita() {
         this.pussissa = true;
     }
-    
-    public boolean getPussissa(){
+
+    public void liikuta() {
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+
+    public void jarruta(int deltax, int deltay) {
+        if (vx < 0) {
+            setVx(jarrutaNegatiivista(vx, deltax));
+        } else {
+            setVx(jarrutaPositiivista(vx, deltax));
+        }
+
+        if (vy< 0) {
+            setVy(jarrutaNegatiivista(vy, deltay));
+        } else {
+            setVy(jarrutaPositiivista(vy, deltay));
+        }
+
+    }
+
+    public int jarrutaNegatiivista(int v, int deltaV) {
+        if (v*(-1) >= deltaV) {
+            v += deltaV;
+        } else {
+            v = 0;
+        }
+        return v;
+    }
+
+    public int jarrutaPositiivista(int v, int deltaV) {
+        if (v >= deltaV) {
+            v -= deltaV;
+        } else {
+            v = 0;
+        }
+        return v;
+    }
+
+    public boolean getPussissa() {
         return this.pussissa;
     }
-    
+
     public int getN() {
         return n;
     }
@@ -74,12 +111,4 @@ public class Pallo {
     public void setY(int y) {
         this.y = y;
     }
-
-
-
-    
-    
-    
-    
-    
 }
