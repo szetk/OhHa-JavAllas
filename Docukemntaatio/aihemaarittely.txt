@@ -1,0 +1,17 @@
+Aihem��rittely
+
+Aihe: biljardipeli (pool = allas)
+
+Kehitet��n yksinkertainen pool-biljardipeli, jossa pelimuotona on ainakin 8-pallo. Peli� pelaa kaksi pelaajaa vuorotellen yleisten s��nt�jen mukaisesti, eik� luultavasti tulla toteuttamaan teko�ly�. Ohjelmaan tulee yksinkertainen fysiikkamallinnus, jolla lasketaan pallojen liikeratoja. Liikkeisiin vaikuttaa ainakin t�rm�ykset reunoihin ja palloihin sek� p�yd�n pinnan ja pallon v�linen kitkakerroin. My�s muita vaikuttajia voidaan tarvittaessa lis�t� ohjelman toiminnallisuuteen. K�ytt�liittym� tulee olemaan graafinen ja kaksiulotteinen, joka on kuvattu ylh��lt�. Mit� luultavimmin ohjelma ei tule my�sk��n sis�lt�m��n ��niefektej� eik� pallojen py�rimisen, liidun tai muiden vastaavien seikkojen tuomia vaikutuksia.
+
+
+K�ytt�j�t: pelaaja 1, pelaaja 2
+
+
+Molemmilla pelaajilla on oletuksena samanlaiset toiminnot ja oikeudet.
+
+Pelaajan toiminnot:
+- ly�ntipallon sijoitus (tarvittaessa)
+- ly�nnin suunnan valitseminen
+- ly�nnin voimakkuuden valitseminen
+- pelin keskeytys
