@@ -6,6 +6,10 @@ Päivä	Aika	Tehtävä
 15.5.	2h	Ohjelmoinnin aloittaminen, fysiikkamoottorin suunnittelu		
 16.5.	8h	kertaus, ohjelmistotekniikan menetelmien opiskelu, fysiikan laskeminen ja pohtiminen, koodaus, testaus	
 17.7.	1h	testejä	
+	1,5h	Githubin raiskausta (kahden tiedoston siirtäminen kansioon)
+	4h	Testejä, koodia, fysiikkaa
+	1,5h	Kaaviota
+18.7.
 		
 		
 		
