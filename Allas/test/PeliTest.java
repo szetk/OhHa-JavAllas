@@ -44,16 +44,6 @@ public class PeliTest {
     // public void hello() {}
 
     @Test
-    public void lasketaankoEtaisyysOikein() { 
-        assertEquals(10, peli.etaisyys(peli.getPallot().get(0), 60, 50));
-        assertEquals(10, peli.etaisyys(peli.getPallot().get(0), 40, 50));
-        assertEquals(14, peli.etaisyys(peli.getPallot().get(0), 60, 60)); // Oikea tulos olisi toki 14,1421356...
-        assertEquals(14, peli.etaisyys(peli.getPallot().get(0), 40, 40));
-    }
-
-
-
-    @Test
     public void putoaakoPallo() {
         peli.getPallot().get(0).setX(500);
         peli.getPallot().get(0).setY(350);
@@ -102,11 +92,11 @@ public class PeliTest {
         Pallo pallo = peli.getPallot().get(0);
         peli.asetaVauhti(pallo, 0, -5);
         boolean tunnistettu = false;
-        
-        for (int i = 0; i < 10; i++){
+
+        for (int i = 0; i < 10; i++) {
             pallo.liikuta();
 //            System.out.println(pallo.getX() + ", " + pallo.getY());
-            if (peli.osuuSeinaan(pallo) && tunnistettu == false){
+            if (peli.osuuSeinaan(pallo) && tunnistettu == false) {
                 tunnistettu = true;
 //                System.out.println("Osui seinään");
             }
@@ -116,6 +106,46 @@ public class PeliTest {
 
     @Test
     public void tunnistetaankoTormaysPalloon() {
+        Pallo pallo = peli.getPallot().get(0);
+        Pallo pallo2 = new Pallo(70, 50, 2);
         
+        peli.asetaVauhti(pallo, 2, 0);
+        boolean tunnistettu = false;
+
+        for (int i = 0; i < 10; i++) {
+            pallo.liikuta();
+//            System.out.println(pallo.getX() + ", " + pallo.getY());
+//            System.out.println(pallo2.getX() + ", " + pallo2.getY());
+            if (peli.osuuPalloon(pallo, pallo2) && tunnistettu == false) {
+                tunnistettu = true;
+//                System.out.println("Osui palloon");
+            }
+        }
+        assertEquals(true, tunnistettu);
+
     }
+    
+    @Test
+    public void tunnistetaankoTormaysLiikkuvaanPalloon() {
+        Pallo pallo = peli.getPallot().get(0);
+        Pallo pallo2 = new Pallo(70, 50, 2);
+        
+        peli.asetaVauhti(pallo, 3, 0);
+        peli.asetaVauhti(pallo2, 1, 0);
+        boolean tunnistettu = false;
+
+        for (int i = 0; i < 10; i++) {
+            pallo.liikuta();
+            pallo2.liikuta();
+//            System.out.println(pallo.getX() + ", " + pallo.getY());
+//            System.out.println(pallo2.getX() + ", " + pallo2.getY());
+            if (peli.osuuPalloon(pallo, pallo2) && tunnistettu == false) {
+                tunnistettu = true;
+//                System.out.println("Osui palloon");
+            }
+        }
+        assertEquals(true, tunnistettu);
+
+    }
+    
 }

@@ -71,6 +71,14 @@ public class Pallo {
     public boolean getPussissa() {
         return this.pussissa;
     }
+    
+    public int etaisyys(int x, int y) {
+        int deltax = this.x - x;
+        int deltay = this.y - y;
+        deltax *= deltax;
+        deltay *= deltay;
+        return (int) Math.sqrt(deltax + deltay);
+    }
 
     public int getN() {
         return n;

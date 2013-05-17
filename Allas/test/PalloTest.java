@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
  * @author Sami
  */
 public class PalloTest {
+    Pallo pallo;
 
     public PalloTest() {
     }
@@ -26,6 +27,7 @@ public class PalloTest {
 
     @Before
     public void setUp() {
+        pallo = new Pallo (50,50,2);
     }
 
     @After
@@ -39,22 +41,27 @@ public class PalloTest {
 
     @Test
     public void pallonKonstruktori() {
-        Pallo boltsi = new Pallo(0, 0, 2);
-        assertEquals(2, boltsi.getN());
-        assertEquals(0, boltsi.getX(), boltsi.getY());
+        assertEquals(2, pallo.getN());
+        assertEquals(0, pallo.getX(), pallo.getY());
+    }
+
+    @Test
+    public void lasketaankoEtaisyysOikein() {
+        assertEquals(10, pallo.etaisyys(60, 50));
+        assertEquals(10, pallo.etaisyys(40, 50));
+        assertEquals(14, pallo.etaisyys(60, 60)); // Oikea tulos olisi toki 14,1421356...
+        assertEquals(14, pallo.etaisyys(40, 40));
     }
 
     @Test
     public void pussittuukoPallo() {
-        Pallo boltsi = new Pallo(0, 0, 2);
-        assertEquals(false, boltsi.getPussissa());
-        boltsi.pussita();
-        assertEquals(true, boltsi.getPussissa());
+        assertEquals(false, pallo.getPussissa());
+        pallo.pussita();
+        assertEquals(true, pallo.getPussissa());
     }
 
     @Test
     public void liikuttuukoPallo() {
-        Pallo pallo = new Pallo(50, 50, 2);
         pallo.liikuta();
         assertEquals(50, pallo.getX(), pallo.getY());
         pallo.setVx(3);
@@ -66,7 +73,6 @@ public class PalloTest {
 
     @Test
     public void liikuttuukoNegatiivisesti() {
-        Pallo pallo = new Pallo(50, 50, 2);
         pallo.liikuta();
         assertEquals(50, pallo.getX(), pallo.getY());
         pallo.setVx(-3);
@@ -78,7 +84,6 @@ public class PalloTest {
 
     @Test
     public void jarruTesti() {
-        Pallo pallo = new Pallo(50, 50, 2);
         pallo.setVx(3);
         pallo.setVy(3);
         assertEquals(3, pallo.getVx(), pallo.getVy());
@@ -91,7 +96,6 @@ public class PalloTest {
 
     @Test
     public void jarruTestiNegatiiviselleNopeudelle() {
-        Pallo pallo = new Pallo(50, 50, 2);
         pallo.setVx(-3);
         pallo.setVy(-3);
         assertEquals(-3, pallo.getVx(), pallo.getVy());
@@ -101,6 +105,4 @@ public class PalloTest {
         pallo.jarruta(0, 4);
         assertEquals(0, pallo.getVy());
     }
-    
-
 }

@@ -105,8 +105,8 @@ public class Peli {
     }
 
     public boolean osuuPalloon(Pallo pallo1, Pallo pallo2) {
-        if (etaisyys(pallo1, pallo2.getX(), pallo2.getY()) <= 2 * r) {
-
+        if (pallo1.etaisyys(pallo2.getX(), pallo2.getY()) <= 2 * r) {
+            laskeTormaysPalloille(pallo1, pallo2);
             return true;
         }
         return false;
@@ -119,35 +119,27 @@ public class Peli {
     }
 
     public boolean putoaaPussiin(Pallo pallo) {
-        if (etaisyys(pallo, 0, 0) <= this.seina * 2) {
+        if (pallo.etaisyys(0, 0) <= this.seina * 2) {
             return true;
         }
-        if (etaisyys(pallo, 0, leveys) <= this.seina * 2) {
+        if (pallo.etaisyys(0, leveys) <= this.seina * 2) {
             return true;
         }
-        if (etaisyys(pallo, pituus, 0) <= this.seina * 2) {
+        if (pallo.etaisyys(pituus, 0) <= this.seina * 2) {
             return true;
         }
-        if (etaisyys(pallo, pituus, leveys) <= this.seina * 2) {
+        if (pallo.etaisyys(pituus, leveys) <= this.seina * 2) {
             return true;
         }
-        if (etaisyys(pallo, (int) pituus / 2, 0) <= this.seina * 2) {
+        if (pallo.etaisyys((int) pituus / 2, 0) <= this.seina * 2) {
             return true;
         }
-        if (etaisyys(pallo, (int) pituus / 2, leveys) <= this.seina * 2) {
+        if (pallo.etaisyys((int) pituus / 2, leveys) <= this.seina * 2) {
             return true;
         }
         return false;
     }
 
-    public int etaisyys(Pallo pallo, int x, int y) {
-        int deltax = pallo.getX() - x;
-        int deltay = pallo.getY() - y;
-        deltax *= deltax;
-        deltay *= deltay;
-
-        return (int) Math.sqrt(deltax + deltay);
-    }
 
     public void asetaVauhti(Pallo pallo, int vx, int vy) {
         pallo.setVx(vx);
