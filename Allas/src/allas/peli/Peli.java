@@ -5,6 +5,7 @@
 package allas.peli;
 
 import allas.domain.Pallo;
+import allas.tools.Vektori;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -147,6 +148,11 @@ public class Peli {
     }
 
     public void laskeTormaysPalloille(Pallo pallo1, Pallo pallo2) {        
+        Vektori paikka1 = new Vektori(pallo1.getX(), pallo1.getY());
+        Vektori paikka2 = new Vektori(pallo2.getX(), pallo2.getY());
+        
+        Vektori vauhti1 = new Vektori(pallo1.getVx(), pallo1.getVy());
+        Vektori vauhti2 = new Vektori(pallo2.getVx(), pallo2.getVy());
         
     }
 
