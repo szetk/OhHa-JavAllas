@@ -8,7 +8,6 @@ import allas.domain.Pallo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-
 /**
  *
  * @author Sami
@@ -22,6 +21,7 @@ public class Peli {
     private int leveys; //pöydän koko
     private int pituus;
     private int seina; // seinän paksuus
+    private boolean putosi;
 
     public Peli(int pituus, int leveys, int seina) {
         this.pallot = new ArrayList<>();
@@ -29,16 +29,15 @@ public class Peli {
         this.pituus = pituus;
         this.seina = seina;
         this.arpoja = new Random();
+        this.putosi = false;
         this.r = 5;
         this.kitka = 1;
         generoiPallot();
         asetaPallot(this.pituus * 6 / 8, this.leveys / 2);
     }
 
-    
-
     public boolean generoiPallot() {
-        if (!this.pallot.isEmpty()){
+        if (!this.pallot.isEmpty()) {
             return false;
         }
         this.pallot.add(new Pallo(100, 100, 0)); //valkoinen pallo
@@ -46,14 +45,14 @@ public class Peli {
 
         int i = 1;
         while (i < 16) {
-            if (i == 5){
+            if (i == 5) {
                 this.pallot.add(new Pallo(100, 100, 8));
                 i++;
                 continue;
             }
             nro = arpoja.nextInt(15) + 1;
 //            System.out.println(nro);
-            
+
             if (haePallo(nro) == null && nro != 8) {
                 this.pallot.add(new Pallo(100, 100, nro));
                 i++;
@@ -86,10 +85,10 @@ public class Peli {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j <= i; j++) {
                 this.pallot.get(nro).setX(ekaX);
-                this.pallot.get(nro).setY(ekaY + j*2*this.r);
+                this.pallot.get(nro).setY(ekaY + j * 2 * this.r);
                 nro++;
             }
-            ekaY = Math.sqrt(3*r*r);
+            ekaY = Math.sqrt(3 * r * r);
             ekaX -= r;
         }
     }
@@ -99,11 +98,13 @@ public class Peli {
             if (pallo.getPussissa()) {
                 continue;
             }
+            // jos this.putosi = false, ei tarvii kattoa joku pallo pussittunut
             pallo.liikuta();
             pallo.jarruta(this.kitka, this.kitka);
             if (putoaaPussiin(pallo)) {
                 pallo.pussita();
                 poistaPelista(pallo);
+                this.putosi = true;
             } else {
                 osuuko(pallo);
             }
@@ -145,7 +146,8 @@ public class Peli {
         return false;
     }
 
-    public void laskeTormaysPalloille(Pallo pallo1, Pallo pallo2) {
+    public void laskeTormaysPalloille(Pallo pallo1, Pallo pallo2) {        
+        
     }
 
     public boolean putoaaPussiin(Pallo pallo) {
@@ -187,12 +189,17 @@ public class Peli {
         }
         return null;
     }
-    
+
     public ArrayList<Pallo> getPallot() {
         return this.pallot;
     }
 
     public double getKitka() {
         return this.kitka;
+    }
+
+    public boolean getPutosi() {
+        return this.putosi;
+
     }
 }

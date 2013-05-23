@@ -9,10 +9,12 @@ Päivä	Aika	Tehtävä
 	1,5h	Githubin raiskausta (kahden tiedoston siirtäminen kansioon)
 	4h	Testejä, koodia, fysiikkaa
 	1,5h	Kaaviota
-18.7.
+18.7.	2h	Fysiikkaa
+22.5.	2h	Törmäyksiä, palloja, testejä
+23.5.	5h	Pallojen törmäyksiä
 		
 		
 		
 		
 			
-yht.	3h	
+yht.	30h	

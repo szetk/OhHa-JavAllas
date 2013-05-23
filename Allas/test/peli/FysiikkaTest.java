@@ -115,10 +115,10 @@ public class FysiikkaTest {
 
         for (int i = 0; i < 20; i++) {
             pallo.liikuta();
-            System.out.println(pallo.getX() + ", " + pallo.getY());
+//            System.out.println(pallo.getX() + ", " + pallo.getY());
             if (peli.osuuSeinaan(pallo) && tunnistettu == false) {
                 tunnistettu = true;
-                System.out.println("Osui seinään paikassa:" + pallo.getX() + ", " + pallo.getY());
+//                System.out.println("Osui seinään paikassa:" + pallo.getX() + ", " + pallo.getY());
             }
         }
         assertEquals(true, tunnistettu);
