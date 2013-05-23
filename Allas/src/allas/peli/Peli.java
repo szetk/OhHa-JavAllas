@@ -6,6 +6,7 @@ package allas.peli;
 
 import allas.domain.Pallo;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -15,9 +16,9 @@ import java.util.Random;
 public class Peli {
 
     private ArrayList<Pallo> pallot;
-    private int r;
+    private double r;
     private Random arpoja;
-    private int kitka;
+    private double kitka;
     private int leveys; //pöydän koko
     private int pituus;
     private int seina; // seinän paksuus
@@ -31,35 +32,66 @@ public class Peli {
         this.r = 5;
         this.kitka = 1;
         generoiPallot();
-        asetaPallot();
+        asetaPallot(this.pituus * 6 / 8, this.leveys / 2);
     }
 
-    public ArrayList<Pallo> getPallot() {
-        return this.pallot;
+    
+
+    public boolean generoiPallot() {
+        if (!this.pallot.isEmpty()){
+            return false;
+        }
+        this.pallot.add(new Pallo(100, 100, 0)); //valkoinen pallo
+        int nro;
+
+        int i = 1;
+        while (i < 16) {
+            if (i == 5){
+                this.pallot.add(new Pallo(100, 100, 8));
+                i++;
+                continue;
+            }
+            nro = arpoja.nextInt(15) + 1;
+//            System.out.println(nro);
+            
+            if (haePallo(nro) == null && nro != 8) {
+                this.pallot.add(new Pallo(100, 100, nro));
+                i++;
+            }
+        }
+        int pallo11 = this.pallot.get(11).getN();
+        int pallo15 = this.pallot.get(15).getN();
+        if ((pallo11 < 8 && pallo15 < 8) || (pallo11 > 8 && pallo15 > 8)) {
+            vaihdaPallo(pallo15);
+        }
+        return true;
     }
 
-    public int getKitka() {
-        return this.kitka;
-    }
-
-    public void generoiPallot() {
-        for (int i = 0; i <= 15; i++) {
-            Pallo pallo = new Pallo(100, 200, i);
-            this.pallot.add(pallo);
+    public void vaihdaPallo(int pallo15) {
+        while (true) {
+            int nro = arpoja.nextInt(14) + 1;
+            int palloX = this.pallot.get(nro).getN();
+            if (((palloX < 8 && pallo15 > 8) || (palloX > 8 && pallo15 < 8)) && (palloX != 11)) { // Palloja 8 tai 11 ei saa vaihtaa
+                Collections.swap(this.pallot, nro, 15);
+                break;
+            }
         }
     }
 
-    public void asetaPallot() {
-        int x = (int) this.pituus / 8;
-        int y = (int) this.leveys / 2;
+    public void asetaPallot(double rivinEkaX, double rivinEkaY) {
+        double ekaX = rivinEkaX; // Tarviiko?
+        double ekaY = rivinEkaY;
+        int nro = 1;
 
-        this.pallot.get(8).setX(6 * x);
-        this.pallot.get(8).setY(y);
-
-        this.pallot.get(0).setX(2 * x);
-        this.pallot.get(0).setY(y);
-
-        // Kesken
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j <= i; j++) {
+                this.pallot.get(nro).setX(ekaX);
+                this.pallot.get(nro).setY(ekaY + j*2*this.r);
+                nro++;
+            }
+            ekaY = Math.sqrt(3*r*r);
+            ekaX -= r;
+        }
     }
 
     public void aikaHyppy() {
@@ -87,7 +119,6 @@ public class Peli {
 
         }
         if (osuuSeinaan(pallo1)) {
-            laskeTormaysSeinaan(pallo1);
             return true;
         }
         return false;
@@ -96,9 +127,11 @@ public class Peli {
     public boolean osuuSeinaan(Pallo pallo) {
         // lisää ehtoja pussien lähettyville tulossa
         if (pallo.getX() <= 0 + this.r + this.seina || pallo.getX() >= this.pituus + this.r + this.seina) {
+            pallo.setVx(-1 * pallo.getVx());
             return true;
         }
         if (pallo.getY() <= 0 + this.r + this.seina || pallo.getY() >= this.leveys + this.r + this.seina) {
+            pallo.setVy(-1 * pallo.getVy());
             return true;
         }
         return false;
@@ -115,9 +148,6 @@ public class Peli {
     public void laskeTormaysPalloille(Pallo pallo1, Pallo pallo2) {
     }
 
-    public void laskeTormaysSeinaan(Pallo pallo) {
-    }
-
     public boolean putoaaPussiin(Pallo pallo) {
         if (pallo.etaisyys(0, 0) <= this.seina * 2) {
             return true;
@@ -131,23 +161,22 @@ public class Peli {
         if (pallo.etaisyys(pituus, leveys) <= this.seina * 2) {
             return true;
         }
-        if (pallo.etaisyys((int) pituus / 2, 0) <= this.seina * 2) {
+        if (pallo.etaisyys(pituus / 2, 0) <= this.seina * 2) {
             return true;
         }
-        if (pallo.etaisyys((int) pituus / 2, leveys) <= this.seina * 2) {
+        if (pallo.etaisyys(pituus / 2, leveys) <= this.seina * 2) {
             return true;
         }
         return false;
     }
 
-
-    public void asetaVauhti(Pallo pallo, int vx, int vy) {
+    public void asetaVauhti(Pallo pallo, double vx, double vy) {
         pallo.setVx(vx);
         pallo.setVy(vy);
     }
 
     public void poistaPelista(Pallo pallo) {
-        System.out.println("Not supported yet!");
+        this.pallot.remove(this.haePallo(pallo.getN()));
     }
 
     public Pallo haePallo(int n) {
@@ -156,7 +185,14 @@ public class Peli {
                 return pallo;
             }
         }
-        // Exception
         return null;
+    }
+    
+    public ArrayList<Pallo> getPallot() {
+        return this.pallot;
+    }
+
+    public double getKitka() {
+        return this.kitka;
     }
 }

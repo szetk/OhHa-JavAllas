@@ -1,3 +1,5 @@
+package peli;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -5,6 +7,7 @@
 
 import allas.domain.Pallo;
 import allas.peli.Peli;
+import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -12,11 +15,11 @@ import static org.junit.Assert.*;
  *
  * @author Sami
  */
-public class PeliTest {
+public class FysiikkaTest {
 
     Peli peli;
 
-    public PeliTest() {
+    public FysiikkaTest() {
     }
 
     @BeforeClass
@@ -90,15 +93,32 @@ public class PeliTest {
     @Test
     public void tunnistetaankoTormaysSeinaan() {
         Pallo pallo = peli.getPallot().get(0);
-        peli.asetaVauhti(pallo, 0, -5);
+        peli.asetaVauhti(pallo, 0, -2.5);
         boolean tunnistettu = false;
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             pallo.liikuta();
 //            System.out.println(pallo.getX() + ", " + pallo.getY());
             if (peli.osuuSeinaan(pallo) && tunnistettu == false) {
                 tunnistettu = true;
-//                System.out.println("Osui seinään");
+//                System.out.println("Osui seinään paikassa:" + pallo.getX() + ", " + pallo.getY());
+            }
+        }
+        assertEquals(true, tunnistettu);
+    }
+
+    @Test
+    public void tunnistetaankoVinoTormaysSeinaan() {
+        Pallo pallo = peli.getPallot().get(0);
+        peli.asetaVauhti(pallo, 1.1358, -2.13545);
+        boolean tunnistettu = false;
+
+        for (int i = 0; i < 20; i++) {
+            pallo.liikuta();
+            System.out.println(pallo.getX() + ", " + pallo.getY());
+            if (peli.osuuSeinaan(pallo) && tunnistettu == false) {
+                tunnistettu = true;
+                System.out.println("Osui seinään paikassa:" + pallo.getX() + ", " + pallo.getY());
             }
         }
         assertEquals(true, tunnistettu);
@@ -108,7 +128,7 @@ public class PeliTest {
     public void tunnistetaankoTormaysPalloon() {
         Pallo pallo = peli.getPallot().get(0);
         Pallo pallo2 = new Pallo(70, 50, 2);
-        
+
         peli.asetaVauhti(pallo, 2, 0);
         boolean tunnistettu = false;
 
@@ -124,12 +144,12 @@ public class PeliTest {
         assertEquals(true, tunnistettu);
 
     }
-    
+
     @Test
     public void tunnistetaankoTormaysLiikkuvaanPalloon() {
         Pallo pallo = peli.getPallot().get(0);
         Pallo pallo2 = new Pallo(70, 50, 2);
-        
+
         peli.asetaVauhti(pallo, 3, 0);
         peli.asetaVauhti(pallo2, 1, 0);
         boolean tunnistettu = false;
@@ -147,5 +167,6 @@ public class PeliTest {
         assertEquals(true, tunnistettu);
 
     }
+    
     
 }

@@ -10,14 +10,14 @@ package allas.domain;
  */
 public class Pallo {
 
-    private int x; // paikka
-    private int y;
-    private int vx; // vauhti
-    private int vy;
+    private double x; // paikka
+    private double y;
+    private double vx; // vauhti
+    private double vy;
     private int n; // pallon numero
     private boolean pussissa;
 
-    public Pallo(int x, int y, int n) {
+    public Pallo(double x, double y, int n) {
         this.x = x;
         this.y = y;
         this.n = n;
@@ -35,14 +35,14 @@ public class Pallo {
         this.y += this.vy;
     }
 
-    public void jarruta(int deltax, int deltay) {
+    public void jarruta(double deltax, double deltay) {
         if (vx < 0) {
             setVx(jarrutaNegatiivista(vx, deltax));
         } else {
             setVx(jarrutaPositiivista(vx, deltax));
         }
 
-        if (vy< 0) {
+        if (vy < 0) {
             setVy(jarrutaNegatiivista(vy, deltay));
         } else {
             setVy(jarrutaPositiivista(vy, deltay));
@@ -50,8 +50,8 @@ public class Pallo {
 
     }
 
-    public int jarrutaNegatiivista(int v, int deltaV) {
-        if (v*(-1) >= deltaV) {
+    public double jarrutaNegatiivista(double v, double deltaV) {
+        if (v * (-1) >= deltaV) {
             v += deltaV;
         } else {
             v = 0;
@@ -59,7 +59,7 @@ public class Pallo {
         return v;
     }
 
-    public int jarrutaPositiivista(int v, int deltaV) {
+    public double jarrutaPositiivista(double v, double deltaV) {
         if (v >= deltaV) {
             v -= deltaV;
         } else {
@@ -68,35 +68,45 @@ public class Pallo {
         return v;
     }
 
+    public double etaisyys(double x, double y) {
+        double deltax = this.x - x;
+        double deltay = this.y - y;
+        deltax *= deltax;
+        deltay *= deltay;
+        return (double) Math.sqrt(deltax + deltay);
+    }
+
     public boolean getPussissa() {
         return this.pussissa;
     }
-    
-    public int etaisyys(int x, int y) {
-        int deltax = this.x - x;
-        int deltay = this.y - y;
-        deltax *= deltax;
-        deltay *= deltay;
-        return (int) Math.sqrt(deltax + deltay);
+
+    public boolean liikkuuko() {
+        if (this.vx >= 0.0000000001 || this.vx <= -0.0000000001) {
+            return true;
+        }
+        if (this.vy >= 0.0000000001 || this.vy <= -0.0000000001) {
+            return true;
+        }
+        return false;
     }
 
     public int getN() {
         return n;
     }
 
-    public int getVx() {
+    public double getVx() {
         return vx;
     }
 
-    public int getVy() {
+    public double getVy() {
         return vy;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -104,19 +114,20 @@ public class Pallo {
         this.n = n;
     }
 
-    public void setVx(int vx) {
+    public void setVx(double vx) {
         this.vx = vx;
+
     }
 
-    public void setVy(int vy) {
+    public void setVy(double vy) {
         this.vy = vy;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 }

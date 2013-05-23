@@ -15,5 +15,6 @@ public class Main {
         public static void main(String[] args) {
         // TODO code application logic here
             Peli peli = new Peli (1000, 400, 10);
+            
     }
 }
