@@ -11,7 +11,7 @@ Päivä	Aika	Tehtävä
 	1,5h	Kaaviota
 18.7.	2h	Fysiikkaa
 22.5.	2h	Törmäyksiä, palloja, testejä
-23.5.	5h	Pallojen törmäyksiä
+23.5.	7h	Pallojen törmäyksiä, vektorien harkinta, Peli-luokan puolittamisen suunnitteleminen
 		
 		
 		
