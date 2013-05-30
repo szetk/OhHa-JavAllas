@@ -29,7 +29,7 @@ public class PalloTest {
 
     @Before
     public void setUp() {
-        pallo = new Pallo (50,50,2);
+        pallo = new Pallo (50, 50, 2, 10);
     }
 
     @After
@@ -59,7 +59,7 @@ public class PalloTest {
     @Test
     public void pussittuukoPallo() {
         assertEquals(false, pallo.getPussissa());
-        pallo.pussita();
+        pallo.setPussissa(true);
         assertEquals(true, pallo.getPussissa());
     }
 

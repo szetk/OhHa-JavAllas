@@ -1,10 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package allas.domain;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
+ * Tämä luokka kuvaa palloa biljardipelissä.
  *
  * @author Sami
  */
@@ -15,26 +15,33 @@ public class Pallo {
     private double vx; // vauhti
     private double vy;
     private int n; // pallon numero
+    private int r;
     private boolean pussissa;
 
-    public Pallo(double x, double y, int n) {
+    public Pallo(double x, double y, int n, int r) {
         this.x = x;
         this.y = y;
         this.n = n;
         this.vx = 0;
         this.vy = 0;
+        this.r = r;
         this.pussissa = false;
     }
 
-    public void pussita() {
-        this.pussissa = true;
-    }
-
+    /**
+     * Tämä metodi siirtää pallon uuteen paikkaan.
+     */
     public void liikuta() {
         this.x += this.vx;
         this.y += this.vy;
     }
 
+    /**
+     * Tämä metodi hidastaa vähentää pallon liikenopeutta.
+     *
+     * @param deltax Jarrutuksen suuruus x-akselin suhteen.
+     * @param deltay Jarrutuksen suuruus y-akselin suhteen.
+     */
     public void jarruta(double deltax, double deltay) {
         if (vx < 0) {
             setVx(jarrutaNegatiivista(vx, deltax));
@@ -68,6 +75,13 @@ public class Pallo {
         return v;
     }
 
+    /**
+     * Tämä metodi laskee pallon ja pisteen välisen etäisyyden.
+     *
+     * @param x Pisteen x-koordinaatti.
+     * @param y Pisteen y-koordinaatti.
+     * @return
+     */
     public double etaisyys(double x, double y) {
         double deltax = this.x - x;
         double deltay = this.y - y;
@@ -80,6 +94,15 @@ public class Pallo {
         return this.pussissa;
     }
 
+    public void setPussissa(Boolean pussissa) {
+        this.pussissa = pussissa;
+    }
+
+    /**
+     * Tämä metodi kertoo liikkuuko pallo tarkkuuden rajoissa.
+     *
+     * @return Palauttaa totuusarvona pallon liiketilan.
+     */
     public boolean liikkuuko() {
         if (this.vx >= 0.0000000001 || this.vx <= -0.0000000001) {
             return true;
@@ -129,5 +152,23 @@ public class Pallo {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    /**
+     * Tämä metodi piirtää pallon parametrina saatuun grafiikkaan. Lyöntipallo on valkoinen, 8-pallo musta, muut pienet vihreitä ja suuret sinisiä.
+     * @param graphics Parametrina saatu grafiikka.
+     */
+    public void piirra(Graphics graphics) {
+        if (this.n == 0) {
+            graphics.setColor(Color.WHITE);
+        } else if (this.n < 8) {
+            graphics.setColor(Color.GREEN);
+        } else if (this.n > 8) {
+            graphics.setColor(Color.BLUE);
+        } else {
+            graphics.setColor(Color.BLACK);
+        }
+
+        graphics.fillOval((int) this.x, (int) this.y, 2 * this.r, 2 * this.r);
     }
 }

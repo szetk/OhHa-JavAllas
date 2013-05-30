@@ -32,7 +32,7 @@ public class FysiikkaTest {
 
     @Before
     public void setUp() {
-        peli = new Peli(1000, 400, 10);
+        peli = new Peli(1000, 400, 10, 30);
         peli.getPallot().get(0).setX(50);
         peli.getPallot().get(0).setY(50);
     }
@@ -58,7 +58,7 @@ public class FysiikkaTest {
                 if (peli.getPallot().get(0).getPussissa()) {
                     continue;
                 }
-                peli.getPallot().get(0).pussita();
+                peli.getPallot().get(0).setPussissa(true);
 //                System.out.println("pallo putosi pussiin");
             }
         }
@@ -79,7 +79,7 @@ public class FysiikkaTest {
                 if (peli.getPallot().get(0).getPussissa()) {
                     continue;
                 }
-                peli.getPallot().get(0).pussita();
+                peli.getPallot().get(0).setPussissa(true);
 //                System.out.println("pallo putosi kulmapussiin");
             }
         }
@@ -127,7 +127,7 @@ public class FysiikkaTest {
     @Test
     public void tunnistetaankoTormaysPalloon() {
         Pallo pallo = peli.getPallot().get(0);
-        Pallo pallo2 = new Pallo(70, 50, 2);
+        Pallo pallo2 = new Pallo(70, 50, 2, 10);
 
         peli.asetaVauhti(pallo, 2, 0);
         boolean tunnistettu = false;
@@ -148,7 +148,7 @@ public class FysiikkaTest {
     @Test
     public void tunnistetaankoTormaysLiikkuvaanPalloon() {
         Pallo pallo = peli.getPallot().get(0);
-        Pallo pallo2 = new Pallo(70, 50, 2);
+        Pallo pallo2 = new Pallo(70, 50, 2, 10);
 
         peli.asetaVauhti(pallo, 3, 0);
         peli.asetaVauhti(pallo2, 1, 0);

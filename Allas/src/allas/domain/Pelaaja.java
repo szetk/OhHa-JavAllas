@@ -5,7 +5,7 @@
 package allas.domain;
 
 /**
- *
+ * Tämä luokka on kuvaus pelaajasta.
  * @author Sami
  */
 public class Pelaaja {

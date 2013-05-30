@@ -12,9 +12,9 @@ Päivä	Aika	Tehtävä
 18.7.	2h	Fysiikkaa
 22.5.	2h	Törmäyksiä, palloja, testejä
 23.5.	7h	Pallojen törmäyksiä, vektorien harkinta, Peli-luokan puolittamisen suunnitteleminen
+27.5.	1,5h	Kertaus
+28.5.	5h	Grafiikan koodaus, Javadocin alottaminen, yleinen pohdinta, bugien etsintä	
+30.5.	2h	Javadoc, Github, testien korjaus
 		
 		
 		
-		
-			
-yht.	30h	

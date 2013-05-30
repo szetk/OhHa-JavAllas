@@ -32,7 +32,7 @@ public class PeliTest {
 
     @Before
     public void setUp() {
-        peli = new Peli(1000, 400, 10);
+        peli = new Peli(1000, 400, 10, 30);
         peli.getPallot().get(0).setX(50);
         peli.getPallot().get(0).setY(50);
     }
@@ -55,7 +55,7 @@ public class PeliTest {
     @Test
     public void pallojenJarjestys() {
         for (int i = 0; i < 500; i++) {
-            peli = new Peli(1000, 400, 10);
+            peli = new Peli(1000, 400, 10, 30);
             assertTrue(peli.getPallot().get(5).getN() == 8);
             assertTrue(peli.getPallot().get(0).getN() == 0);
         }
