@@ -14,7 +14,7 @@ Päivä	Aika	Tehtävä
 23.5.	7h	Pallojen törmäyksiä, vektorien harkinta, Peli-luokan puolittamisen suunnitteleminen
 27.5.	1,5h	Kertaus
 28.5.	5h	Grafiikan koodaus, Javadocin alottaminen, yleinen pohdinta, bugien etsintä	
-30.5.	2h	Javadoc, Github, testien korjaus
+30.5.	4h	Javadoc, Github, testien korjaus, sekvenssikaavioita
 		
 		
 		
