@@ -12,12 +12,10 @@ public class Vektori {
 
     private double x;
     private double y;
-    private double suuruus;
 
     public Vektori(double x, double y) {
         this.x = x;
         this.y = y;
-        this.suuruus = x * x + y * y;
     }
 
     public Vektori miinus(Vektori a) {
@@ -25,10 +23,12 @@ public class Vektori {
         return c;
     }
 
-    public Vektori kerro(Vektori a) {
-        Vektori c = new Vektori(a.getX() , a.getY());
-        System.out.println("Ei vielä toimi");
-        return c;
+    public double pistetulo(Vektori vektori) {
+        return this.x * vektori.getX() + this.y * vektori.getY();
+    }
+
+    public Vektori tulo(double kerroin) {
+        return new Vektori(this.x * kerroin, this.y * kerroin);
     }
 
     public Vektori plus(Vektori a) {
@@ -36,8 +36,23 @@ public class Vektori {
         return c;
     }
 
-    public double getSuuruus() {
-        return suuruus;
+    public double pituus() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+/**
+ * Tekee vektorista yksikkövektorin
+ * @return 
+ */
+    public Vektori normalisoi() {
+        double pituus = this.pituus();
+        if (pituus != 0.0d) {
+            this.x = this.x / pituus;
+            this.y = this.y / pituus;
+        } else {
+            this.x = 0.0d;
+            this.y = 0.0d;
+        }
+        return this;
     }
 
     public double getX() {

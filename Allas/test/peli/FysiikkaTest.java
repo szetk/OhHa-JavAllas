@@ -32,7 +32,7 @@ public class FysiikkaTest {
 
     @Before
     public void setUp() {
-        peli = new Peli(1000, 400, 10, 30);
+        peli = new Peli(1000, 400, 10, 30, 30);
         peli.getPallot().get(0).setX(50);
         peli.getPallot().get(0).setY(50);
     }
@@ -50,16 +50,16 @@ public class FysiikkaTest {
     public void putoaakoPallo() {
         peli.getPallot().get(0).setX(500);
         peli.getPallot().get(0).setY(350);
-        peli.asetaVauhti(peli.getPallot().get(0), 0, 1);
+        peli.asetaVauhti(peli.getPallot().get(0), 0, 2);
         for (int i = 0; i < 50; i++) {
             peli.getPallot().get(0).liikuta();
-            //       System.out.println(peli.getPallot().get(0).getX() + ", " + peli.getPallot().get(0).getY());
+                   System.out.println(peli.getPallot().get(0).getX() + ", " + peli.getPallot().get(0).getY());
             if (peli.putoaaPussiin(peli.getPallot().get(0))) {
                 if (peli.getPallot().get(0).getPussissa()) {
                     continue;
                 }
                 peli.getPallot().get(0).setPussissa(true);
-//                System.out.println("pallo putosi pussiin");
+                System.out.println("pallo putosi pussiin");
             }
         }
         assertEquals(true, peli.getPallot().get(0).getPussissa());

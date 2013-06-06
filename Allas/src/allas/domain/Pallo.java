@@ -1,5 +1,6 @@
 package allas.domain;
 
+import allas.tools.Vektori;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -104,10 +105,10 @@ public class Pallo {
      * @return Palauttaa totuusarvona pallon liiketilan.
      */
     public boolean liikkuuko() {
-        if (this.vx >= 0.0000000001 || this.vx <= -0.0000000001) {
+        if (this.vx > 0 || this.vx < -0) {
             return true;
         }
-        if (this.vy >= 0.0000000001 || this.vy <= -0.0000000001) {
+        if (this.vy > 0 || this.vy < -0) {
             return true;
         }
         return false;
@@ -153,12 +154,29 @@ public class Pallo {
     public void setY(double y) {
         this.y = y;
     }
-
+    
+    public Vektori getPaikkavektori(){
+        return new Vektori(this.x, this.y);
+    }
+    
+    public Vektori getNopeusvektori(){
+        return new Vektori(this.vx, this.vy);
+    }
+    
+    public void setPaikkavektori(Vektori vektori){
+        this.x = vektori.getX();
+        this.y = vektori.getY();
+    }
+    
+    public void setNopeusvektori(Vektori vektori){
+        this.vx = vektori.getX();
+        this.vy = vektori.getY();
+    }
     /**
      * Tämä metodi piirtää pallon parametrina saatuun grafiikkaan. Lyöntipallo on valkoinen, 8-pallo musta, muut pienet vihreitä ja suuret sinisiä.
      * @param graphics Parametrina saatu grafiikka.
      */
-    public void piirra(Graphics graphics) {
+    public void piirra(Graphics graphics, int seina) {
         if (this.n == 0) {
             graphics.setColor(Color.WHITE);
         } else if (this.n < 8) {
@@ -169,6 +187,6 @@ public class Pallo {
             graphics.setColor(Color.BLACK);
         }
 
-        graphics.fillOval((int) this.x, (int) this.y, 2 * this.r, 2 * this.r);
+        graphics.fillOval((int) this.x + seina - this.r, (int) this.y + seina - this.r, 2 * this.r, 2 * this.r);
     }
 }

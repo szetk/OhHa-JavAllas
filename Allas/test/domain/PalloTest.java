@@ -132,7 +132,7 @@ public class PalloTest {
         assertEquals(false, pallo.liikkuuko());
         pallo.setVx(-0.00000000009);
 //        System.out.println(pallo.getVx() + " " + pallo.getVy());
-        assertEquals(false, pallo.liikkuuko());
+        assertEquals(true, pallo.liikkuuko());
         
         
     }

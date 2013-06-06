@@ -28,7 +28,7 @@ public class Kayttoliittyma implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Allaspeli");
-        frame.setPreferredSize(new Dimension(this.peli.getPituus(), this.peli.getLeveys()));
+        frame.setPreferredSize(new Dimension(this.peli.getPituus() + this.peli.getSeina() * 3, this.peli.getLeveys() + 5*this.peli.getSeina()));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
