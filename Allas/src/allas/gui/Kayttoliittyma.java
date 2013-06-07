@@ -22,29 +22,39 @@ public class Kayttoliittyma implements Runnable {
 
     private void luoKomponentit(Container container) {
         this.poyta = new Poyta(this.peli);
+
         container.add(this.poyta);
+        Nappaimistonkuuntelija nappaimistonkuuntelija = new Nappaimistonkuuntelija(this.peli);
+        Hiirenkuuntelija hiirenkuuntelija = new Hiirenkuuntelija(this.peli);
+        HiirenLiikkeenKuuntelija h = new HiirenLiikkeenKuuntelija();
+        
+        this.frame.addKeyListener(nappaimistonkuuntelija);
+        this.frame.addMouseListener(hiirenkuuntelija);
+        this.frame.addMouseMotionListener(hiirenkuuntelija);
+        
     }
 
     @Override
     public void run() {
-        frame = new JFrame("Allaspeli");
-        frame.setPreferredSize(new Dimension(this.peli.getPituus() + this.peli.getSeina() * 3, this.peli.getLeveys() + 5*this.peli.getSeina()));
+        this.frame = new JFrame("Allaspeli");
+        this.frame.setPreferredSize(new Dimension(this.peli.getPituus() + this.peli.getSeina() * 3, 
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+this.peli.getLeveys() + 5*this.peli.getSeina()));
 
-        luoKomponentit(frame.getContentPane());
+        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.pack();
-        frame.setVisible(true);
+        luoKomponentit(this.frame.getContentPane());
+
+        this.frame.pack();
+        this.frame.setVisible(true);
     }
 
     public JFrame getFrame() {
-        return frame;
+        return this.frame;
     }
-
-
 
     public Paivitettava getPaivitettava() {
         return this.poyta;
     }
 }
+

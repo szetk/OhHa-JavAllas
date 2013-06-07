@@ -9,7 +9,7 @@ public class Main {
     
         public static void main(String[] args) {
         // TODO code application logic here
-            Peli peli = new Peli (1000, 500, 30, 15, 15);
+            Peli peli = new Peli (1000, 500, 30, 15, 17); //pituus, leveys, seinä, pallon säde, pussin säde
             Kayttoliittyma kayttis = new Kayttoliittyma(peli);
                      SwingUtilities.invokeLater(kayttis);
                      

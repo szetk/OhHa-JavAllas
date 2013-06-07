@@ -154,26 +154,29 @@ public class Pallo {
     public void setY(double y) {
         this.y = y;
     }
-    
-    public Vektori getPaikkavektori(){
+
+    public Vektori getPaikkavektori() {
         return new Vektori(this.x, this.y);
     }
-    
-    public Vektori getNopeusvektori(){
+
+    public Vektori getNopeusvektori() {
         return new Vektori(this.vx, this.vy);
     }
-    
-    public void setPaikkavektori(Vektori vektori){
+
+    public void setPaikkavektori(Vektori vektori) {
         this.x = vektori.getX();
         this.y = vektori.getY();
     }
-    
-    public void setNopeusvektori(Vektori vektori){
+
+    public void setNopeusvektori(Vektori vektori) {
         this.vx = vektori.getX();
         this.vy = vektori.getY();
     }
+
     /**
-     * Tämä metodi piirtää pallon parametrina saatuun grafiikkaan. Lyöntipallo on valkoinen, 8-pallo musta, muut pienet vihreitä ja suuret sinisiä.
+     * Tämä metodi piirtää pallon parametrina saatuun grafiikkaan. Lyöntipallo
+     * on valkoinen, 8-pallo musta, muut pienet vihreitä ja suuret sinisiä.
+     *
      * @param graphics Parametrina saatu grafiikka.
      */
     public void piirra(Graphics graphics, int seina) {

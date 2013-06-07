@@ -18,3 +18,4 @@ Päivä	Aika	Tehtävä
 4.6.	5h	Grafiikka, pallojen liikehdintä, vuorojen jaon pohdinta
 5.6.	2h	Pallojen törmäystä 
 6.6.	4h	Pallojen törmäystä, grafiikkaa, bugien korjausta
+7.6.	7h	Pelin kulkua, grafiikkaa, järjestelyä, bugien tekemistä
