@@ -19,3 +19,6 @@ Päivä	Aika	Tehtävä
 5.6.	2h	Pallojen törmäystä 
 6.6.	4h	Pallojen törmäystä, grafiikkaa, bugien korjausta
 7.6.	7h	Pelin kulkua, grafiikkaa, järjestelyä, bugien tekemistä
+8.6.	6h	Pelin kulkua, lyöntivoiman asetusta
+9.6.	1,5h	Maalausta
+

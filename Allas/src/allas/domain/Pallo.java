@@ -99,7 +99,7 @@ public class Pallo {
         deltax *= deltax;
         deltay *= deltay;
         return (double) Math.sqrt(deltax + deltay);
-    }
+    } 
 
     public boolean getPussissa() {
         return this.pussissa;

@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Scanner;
 import javax.swing.Timer;
 
 public class Peli extends Timer {
@@ -21,7 +22,6 @@ public class Peli extends Timer {
     private int seina; // seinän paksuus
     private int r; // pallon säde
     private int reijanKoko;
-    private int valkoisenEnsimmainenOsuma;
     private int pelitilanne; // pyörii(0), aseta valkoinen pallo(1), aseta suuntavektori(2), aseta nopeus(3) 
     private double kitka;
     private double[] lyontivoima;
@@ -32,11 +32,11 @@ public class Peli extends Timer {
     public int hiirenX;
     public int hiirenY;
     private Vektori lyonninSuunta;
-    private int x, y;
+    private Lyonti lyonti;
+    private Scanner lukija;
 
     public Peli(int pituus, int leveys, int seina, int r, int reijanKoko) {
         super(100, null);
-
 
         this.pallot = new ArrayList<>();
         this.arpoja = new Random();
@@ -48,10 +48,13 @@ public class Peli extends Timer {
         this.kitka = 0.03;
         double[] d = {0, 0.2, 20}; // ensimmäinen on lyönnin voima, toinen lyönnin kasvu iteraation aikana ja kolmas maksimivoima
         this.lyontivoima = d;
-        this.aloitustilanne = false;
-        this.pelitilanne = 0;
+        this.aloitustilanne = true;
+        this.pelitilanne = 1;
         this.pelaaja1 = new Pelaaja();
         this.pelaaja2 = new Pelaaja();
+        this.lyonti = null;
+        this.pelaaja2.setHasIsotPallot(true);
+        this.lukija = new Scanner(System.in);
 
         generoiPallot();
         asetaPallot(this.pituus * 6 / 8, this.leveys / 2);
@@ -114,47 +117,70 @@ public class Peli extends Timer {
         }
     }
 
-    public void aja() {
-//        for (Pallo pallo : pallot) {
-//            pallo.setVy(arpoja.nextInt(20));
-//            pallo.setVx(arpoja.nextInt(20));
-//        }
-
+    public Pelaaja aja() {
+        pelaaja1.setNimi("ykkönen");
+        pelaaja2.setNimi("kakkonen");
+        
         while (true) {
-            if (this.pallot.get(0).getPussissa()) {
-                this.pelitilanne = 1;
-            }
-
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
                 System.out.println("Nukkuminen ei onnistunut.");
             }
             if (this.pelitilanne == 0) {
-                while (!this.pallot.get(5).getPussissa()) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException ex) {
-                        System.out.println("Nukkuminen ei onnistunut.");
-                    }
-                    aikaHyppy();
-                    this.paivitettava.paivita();
-                    if (pallotPaikoillaan()) {
-                        this.pelitilanne = 2;
-                        break;
-                    }
-                }
+                pyorita();
+                tarkastaLyonti();
             }
+
+            if (this.pallot.get(0).getPussissa()) {
+                this.pelitilanne = 1;
+            }
+
             if (this.pelitilanne == 3) {
                 this.lyontivoima[0] += this.lyontivoima[1];
-
                 if (this.lyontivoima[0] <= 0 || this.lyontivoima[0] >= this.lyontivoima[2]) {
                     this.lyontivoima[1] *= -1;
                 }
-                System.out.println(this.lyontivoima[0]);
             }
+
             this.paivitettava.paivita();
+
+            if (this.pelitilanne == 4) {
+                return getVuorossaOlevaPelaaja();
+            }
+
+
         }
+    }
+
+    public void tarkastaLyonti() {
+        if (this.lyonti.faul()) {
+            vuoronVaihto();
+            this.pelitilanne = 1;
+            return;
+        }
+        if (this.lyonti.vuoronVaihto()) {
+            vuoronVaihto();
+        }
+
+        this.aloitustilanne = false;
+    }
+
+    public void pyorita() {
+        this.lyonti = new Lyonti(getVuorossaOlevaPelaaja(), this.aloitustilanne);
+        do {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                System.out.println("Nukkuminen ei onnistunut.");
+            }
+            aikaHyppy();
+            this.paivitettava.paivita();
+            if (pallotPaikoillaan()) {
+                this.pelitilanne = 2;
+                break;
+            }
+        } while (!this.pallot.get(5).getPussissa());
     }
 
     public void aikaHyppy() {
@@ -162,13 +188,14 @@ public class Peli extends Timer {
             if (pallo.getPussissa()) {
                 continue;
             }
-            // jos this.putosi = false, ei tarvii kattoa joku pallo pussittunut
             pallo.liikuta();
             pallo.jarruta(this.kitka);
-            int pussinNumero = putoaaPussiin(pallo); // palautetaan 0, jos ei tipu pussiin
+
+            int pussinNumero = putoaaPussiin(pallo); // putoaaPussiin() palauttaa arvon 0 jos ei putoa pussiin, muutoin pussin numeron.
             if (pussinNumero > 0) {
                 System.out.println("pallo " + pallo.getN() + " putosi");
                 pallo.setPussissa(true);
+                this.lyonti.add(pallo.getN());
                 if (pallo.getN() == 8) {
                     kasinPussitus(pussinNumero);
                 } else {
@@ -184,6 +211,7 @@ public class Peli extends Timer {
     public boolean osuuko(Pallo pallo1) {
         if (osuuSeinaan(pallo1)) {
 //            System.out.println("osuu");
+            this.lyonti.tormayksetSeinaan++;
             return true;
         }
 
@@ -192,6 +220,9 @@ public class Peli extends Timer {
                 continue;
             }
             if (osuuPalloon(pallo1, pallo2)) {
+                if (pallo1.getN() == 0 && this.lyonti.kivenEnsimmainenOsuma == 0) {
+                    this.lyonti.kivenEnsimmainenOsuma = pallo2.getN();
+                }
                 return true;
             }
         }
@@ -317,11 +348,26 @@ public class Peli extends Timer {
     }
 
     public void piirra(Graphics g) {
-        g.setColor(Color.WHITE);
-        if (this.pelitilanne == 3) {
-        } else if (this.pelitilanne > 1) {
+        g.setColor(Color.BLACK);
+
+        if (this.pelitilanne > 1) {
             g.drawLine((int) this.pallot.get(0).getX() + this.seina, (int) this.pallot.get(0).getY() + this.seina, this.hiirenX, this.hiirenY);
         }
+
+        if (this.pelitilanne == 3) {
+            g.drawRect(this.pituus * 2 / 3 - 1, this.leveys + 2 * this.seina, (int) (10 * this.lyontivoima[2]), 2 * this.r);
+            g.setColor(Color.RED);
+            g.fillRect(this.pituus * 2 / 3, this.leveys + 2 * this.seina + 1, (int) (10 * this.lyontivoima[0]), 2 * this.r - 1);
+        }
+
+        g.setColor(Color.BLACK);
+        g.drawString("Vuorossa", this.pituus, (int) (this.leveys + 2.5 * this.seina));
+        if (pelaaja1.getVuorossa()) {
+            g.drawString("pelaaja1", this.pituus, this.leveys + 3 * this.seina);
+        } else {
+            g.drawString("pelaaja2", this.pituus, this.leveys + 3 * this.seina);
+        }
+
         for (Pallo pallo : pallot) {
             pallo.piirra(g, this.seina);
         }
@@ -359,26 +405,19 @@ public class Peli extends Timer {
         return reijanKoko;
     }
 
-    private void valkoisenPussitus() {
-        vuoronVaihto();
-        this.pelitilanne = 1;
-
-    }
-
     private void kasinPussitus(int pussinNumero) {
 // pysäytä
 
         Pelaaja pelaaja = getVuorossaOlevaPelaaja();
 
         if (!pallotPussissa(pelaaja) || (pallotPussissa(pelaaja) && pelaaja.getMaalattuPussi() != pussinNumero)) {
-// pelaaja hävisi
+            vuoronVaihto();
         }
-//	if (virhelyönti) - häviää
+	if (this.lyonti.faul()){
+            vuoronVaihto();
+        }
 
-// pelaaja voitti
-
-
-        // kysy pelataanko uudestaan
+        this.pelitilanne = 4;
     }
 
     private void vuoronVaihto() {
@@ -398,8 +437,8 @@ public class Peli extends Timer {
         return pelaaja2;
     }
 
-    private void maalaa() {
-        //     do something
+    private void maalaa(int pussi) {
+        getVuorossaOlevaPelaaja().setMaalattuPussi(pussi);
     }
 
     private boolean pallotPussissa(Pelaaja pelaaja) {
@@ -428,7 +467,7 @@ public class Peli extends Timer {
             if (pallo.getN() == 0) {
                 continue;
             }
-            if (this.pallot.get(0).etaisyys(pallo.getX(), pallo.getY()) < 2 * this.r) {
+            if (this.pallot.get(0).etaisyys(pallo.getX(), pallo.getY()) <= 2 * this.r) { // Pallon asettaminen kohdepallon päälle tai siihen kiinni on kiellettyä
                 System.out.println("Et voi asettaa lyöntipalloa jonkin muun pallon päälle");
                 return false;
             }
@@ -464,8 +503,8 @@ public class Peli extends Timer {
 
     public void asetaLyonninSuunta() {
         Vektori hiirenPaikkavektori = new Vektori(this.hiirenX - this.seina, this.hiirenY - this.seina);
-        System.out.println("hiiren koordinaatit " + this.hiirenX + " " + this.hiirenY);
-        System.out.println("valkosen koordinaatit " + this.pallot.get(0).getX() + " " + this.pallot.get(0).getY());
+//        System.out.println("hiiren koordinaatit " + this.hiirenX + " " + this.hiirenY);
+//        System.out.println("valkosen koordinaatit " + this.pallot.get(0).getX() + " " + this.pallot.get(0).getY());
         this.lyonninSuunta = hiirenPaikkavektori.miinus(this.pallot.get(0).getPaikkavektori());
         this.lyonninSuunta = this.lyonninSuunta.normalisoi();
         this.pelitilanne = 3;
@@ -475,23 +514,57 @@ public class Peli extends Timer {
 
         Vektori lyonti = this.lyonninSuunta.tulo(this.lyontivoima[0]);
 
-        System.out.println("lyönnin pituus " + lyonti.pituus());
-        System.out.println(this.lyonninSuunta.getX() + " " + this.lyonninSuunta.getY());
+//        System.out.println("lyönnin pituus " + lyonti.pituus());
+//        System.out.println(this.lyonninSuunta.getX() + " " + this.lyonninSuunta.getY());
         this.pallot.get(0).setVx(lyonti.getX());
         this.pallot.get(0).setVy(lyonti.getY());
-        System.out.println("asetetaan nopeus: " + lyonti.getX() + " " + lyonti.getY());
+//        System.out.println("asetetaan nopeus: " + lyonti.getX() + " " + lyonti.getY());
 //        this.pallot.get(0).setVx(12);
 //        this.pallot.get(0).setVy(0);
         this.lyontivoima[0] = 0;
-        if (lyontivoima[1] < 0){
+        if (lyontivoima[1] < 0) {
             lyontivoima[1] *= -1;
         }
         this.pelitilanne = 0;
+
+    }
+
+    public Boolean maalaa() {
+        int pussi = -5;
+        try{
+            pussi = lukija.nextInt();
+        } catch(Exception e){
+            System.out.println("Yritä uudestaan!");
+            return false;
+        }
+        if (pussi < 1 || pussi > 6){
+            System.out.println("Yritä uudestaan!");
+            return false;
+        } else{
+            getVuorossaOlevaPelaaja().setMaalattuPussi(pussi);
+            System.out.println("maalattu: " + pussi);
+        return true;
+        }
         
     }
 }
 
 /*
+ häviää jos kasi sisään ja on palloja ja vuoro
+ häviää jos maalattu väärin (tai ei maalattu)
+ alotuksessa valkosta ei saa lyödä taakse
+ jos alotuksessa menee valkonen pussiin, koitetaan uusiks
+
+ pussittamista
+
+ käsipallo:
+ alotuslyönnistä alle neljä koskettaa seinään
+
+ valkonen ei törmää ekana omaan palloon
+ mikään ei törmää valliin tai mene pussiin
+ valkonen menee pussiin
+ jos vain kasi jäljellä, virheen tehnyt häviää
+
 
  pelitilanteet:
  aloitustilanne
@@ -514,6 +587,7 @@ public class Peli extends Timer {
 1 - aseta valkoinen pallo
 2 - aseta suuntavektori
 3 - aseta nopeus ja lyö	
+4 - kasipallo sisään
 
 
 

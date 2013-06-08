@@ -12,20 +12,22 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Sami
+ * @author Samiǥ
  */
 public class Nappaimistonkuuntelija implements KeyListener {
-    
-	private Peli peli;
+
+    private Peli peli;
 
     public Nappaimistonkuuntelija(Peli peli) {
-	this.peli = peli;
+        this.peli = peli;
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {
-         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println("enteriä painettu");
+        if (ke.getKeyCode() == KeyEvent.VK_M) {
+            System.out.println("Maalataan pussi!");
+            System.out.println("Anna maalattavan pussin numero: ");
+            this.peli.maalaa();
         }
     }
 
@@ -37,4 +39,3 @@ public class Nappaimistonkuuntelija implements KeyListener {
     public void keyReleased(KeyEvent ke) {
     }
 }
-

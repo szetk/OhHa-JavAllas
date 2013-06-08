@@ -30,7 +30,7 @@ public class Pelaaja {
     public void setVuorossa(Boolean totuusarvo) {
         this.vuorossa = totuusarvo;
     }
-    public void sethasIsotPallot(Boolean hasIsotPallot){
+    public void setHasIsotPallot(Boolean hasIsotPallot){
         this.hasIsotPallot = hasIsotPallot;
     }
     
@@ -40,5 +40,22 @@ public class Pelaaja {
     
     public boolean hasIsotPallot(){
         return this.hasIsotPallot;
+    }
+    
+    public void setNimi(String nimi){
+        this.nimi = nimi;
+    }
+    
+    public String getNimi(){
+        return this.nimi;
+    }
+    
+    public boolean onOma(int n){
+        if(this.hasIsotPallot && n >= 8){
+            return true;
+        } if (!this.hasIsotPallot && n <= 8){
+            return true;
+        }
+        return false;
     }
 }

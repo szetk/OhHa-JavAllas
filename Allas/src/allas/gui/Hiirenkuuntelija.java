@@ -39,7 +39,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
                 }
                 break;
             case 2:
-                System.out.println("klikkauksen koordinaatit: " + (e.getX() -9) + " " + (e.getY() -30));
+//                System.out.println("klikkauksen koordinaatit: " + (e.getX() -9) + " " + (e.getY() -30));
                 this.peli.asetaLyonninSuunta();
                 break;
             case 3:
