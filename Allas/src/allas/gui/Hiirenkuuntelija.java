@@ -28,6 +28,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+      
         switch (this.peli.getPelitilanne()) {
             case 0:
                 return;
@@ -38,6 +39,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
                 }
                 break;
             case 2:
+                System.out.println("klikkauksen koordinaatit: " + (e.getX() -9) + " " + (e.getY() -30));
                 this.peli.asetaLyonninSuunta();
                 break;
             case 3:
@@ -67,8 +69,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         double eX = e.getX() - 9;
         double eY = e.getY() - 30;
-
-        this.peli.setHiirenPaikka((int) eX, (int) eY);
+        
         switch (this.peli.getPelitilanne()) {
             case 0:
                 return;
@@ -78,6 +79,8 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
             case 2:
                 break;
             case 3:
+                return;
         }
+        this.peli.setHiirenPaikka((int) eX, (int) eY);
     }
 }

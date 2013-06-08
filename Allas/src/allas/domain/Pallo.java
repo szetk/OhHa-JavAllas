@@ -40,20 +40,30 @@ public class Pallo {
     /**
      * Tämä metodi hidastaa vähentää pallon liikenopeutta.
      *
-     * @param deltax Jarrutuksen suuruus x-akselin suhteen.
-     * @param deltay Jarrutuksen suuruus y-akselin suhteen.
+     * @param kitka 
      */
-    public void jarruta(double deltax, double deltay) {
+    public void jarruta(double kitka) {
+        
+        Vektori kitkavektori = this.getNopeusvektori().normalisoi();
+        
+        
+        kitkavektori = kitkavektori.tulo(kitka);
+//        System.out.println(kitkavektori.pituus());
+        
+        double deltaX = Math.abs(kitkavektori.getX());
+        double deltaY = Math.abs(kitkavektori.getY());
+//        System.out.println(deltaX);
+        
         if (vx < 0) {
-            setVx(jarrutaNegatiivista(vx, deltax));
+            setVx(jarrutaNegatiivista(vx, deltaX));
         } else {
-            setVx(jarrutaPositiivista(vx, deltax));
+            setVx(jarrutaPositiivista(vx, deltaX));
         }
 
         if (vy < 0) {
-            setVy(jarrutaNegatiivista(vy, deltay));
+            setVy(jarrutaNegatiivista(vy, deltaY));
         } else {
-            setVy(jarrutaPositiivista(vy, deltay));
+            setVy(jarrutaPositiivista(vy, deltaY));
         }
 
     }

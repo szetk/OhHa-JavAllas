@@ -45,12 +45,12 @@ public class Vektori {
  */
     public Vektori normalisoi() {
         double pituus = this.pituus();
-        if (pituus != 0.0d) {
+        if (pituus != 0) {
             this.x = this.x / pituus;
             this.y = this.y / pituus;
         } else {
-            this.x = 0.0d;
-            this.y = 0.0d;
+            this.x = 0;
+            this.y = 0;
         }
         return this;
     }

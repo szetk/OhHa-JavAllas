@@ -54,7 +54,7 @@ public class FysiikkaTest {
         for (int i = 0; i < 50; i++) {
             peli.getPallot().get(0).liikuta();
                    System.out.println(peli.getPallot().get(0).getX() + ", " + peli.getPallot().get(0).getY());
-            if (peli.putoaaPussiin(peli.getPallot().get(0))) {
+            if (peli.putoaaPussiin(peli.getPallot().get(0)) != 0) {
                 if (peli.getPallot().get(0).getPussissa()) {
                     continue;
                 }
@@ -75,7 +75,7 @@ public class FysiikkaTest {
         for (int i = 0; i < 50; i++) {
             peli.getPallot().get(0).liikuta();
 //                   System.out.println(peli.getPallot().get(0).getX() + ", " + peli.getPallot().get(0).getY());
-            if (peli.putoaaPussiin(peli.getPallot().get(0))) {
+            if (peli.putoaaPussiin(peli.getPallot().get(0)) != 0) {
                 if (peli.getPallot().get(0).getPussissa()) {
                     continue;
                 }
