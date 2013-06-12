@@ -21,4 +21,5 @@ Päivä	Aika	Tehtävä
 7.6.	7h	Pelin kulkua, grafiikkaa, järjestelyä, bugien tekemistä
 8.6.	6h	Pelin kulkua, lyöntivoiman asetusta
 9.6.	1,5h	Maalausta
-
+10.6.	2h	Kaikenlaista sekoilua
+11.6.	5h	Javadoc, kommentointi, refaktorointi, .jar yms...

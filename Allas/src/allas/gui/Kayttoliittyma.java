@@ -1,13 +1,13 @@
 package allas.gui;
 
+import allas.peli.Alusta;
 import allas.peli.Peli;
-import java.awt.Container;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  * Tämä luokka sisältää pelin käyttöliittymän.
+ *
  * @author Sami
  */
 public class Kayttoliittyma implements Runnable {
@@ -15,31 +15,46 @@ public class Kayttoliittyma implements Runnable {
     private Peli peli;
     private JFrame frame;
     private Poyta poyta;
+    private JLabel tekstikentta;
 
     public Kayttoliittyma(Peli peli) {
         this.peli = peli;
     }
 
     private void luoKomponentit(Container container) {
-        this.poyta = new Poyta(this.peli);
+        container.setLayout(new BorderLayout());
+        Container sailio = new Container();
+        sailio.setLayout(new GridLayout(2, 1));
 
-        container.add(this.poyta);
+        this.poyta = new Poyta(this.peli);
+        this.poyta.setBackground(Color.DARK_GRAY);
+
+        this.tekstikentta = new JLabel("Biljardipeli");
+        this.tekstikentta.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+        container.add(this.poyta, BorderLayout.CENTER);
+        sailio.add(this.tekstikentta);
+
+        container.add(sailio, BorderLayout.SOUTH);
+
         Nappaimistonkuuntelija nappaimistonkuuntelija = new Nappaimistonkuuntelija(this.peli);
         Hiirenkuuntelija hiirenkuuntelija = new Hiirenkuuntelija(this.peli);
-        HiirenLiikkeenKuuntelija h = new HiirenLiikkeenKuuntelija();
-        
+
         this.frame.addKeyListener(nappaimistonkuuntelija);
         this.frame.addMouseListener(hiirenkuuntelija);
         this.frame.addMouseMotionListener(hiirenkuuntelija);
-        
+//        this.frame.setResizable(false); // muuttaa ikkunan kokoa
+
+        this.peli.setTekstikentta(this.tekstikentta);
+
     }
 
     @Override
     public void run() {
         this.frame = new JFrame("Allaspeli");
-        this.frame.setPreferredSize(new Dimension(this.peli.getPituus() + this.peli.getSeina() * 3, 
-
-this.peli.getLeveys() + 5*this.peli.getSeina()));
+        this.frame.setPreferredSize(new Dimension(this.peli.getAlusta().getPituus() + this.peli.getAlusta().getSeina() * 2 + this.peli.getAlusta().getPallonSade(),
+                this.peli.getAlusta().getLeveys() + 6 * this.peli.getAlusta().getSeina()));
 
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,4 +72,3 @@ this.peli.getLeveys() + 5*this.peli.getSeina()));
         return this.poyta;
     }
 }
-

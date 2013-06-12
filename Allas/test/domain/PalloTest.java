@@ -1,10 +1,9 @@
 package domain;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
-
 import allas.domain.Pallo;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -14,6 +13,7 @@ import static org.junit.Assert.*;
  * @author Sami
  */
 public class PalloTest {
+
     Pallo pallo;
 
     public PalloTest() {
@@ -29,7 +29,7 @@ public class PalloTest {
 
     @Before
     public void setUp() {
-        pallo = new Pallo (50, 50, 2, 10);
+        pallo = new Pallo(50, 50, 2, 10);
     }
 
     @After
@@ -43,7 +43,7 @@ public class PalloTest {
 
     @Test
     public void pallonKonstruktori() {
-        assertEquals(2, pallo.getN());
+        assertEquals(2, pallo.getPallonNumero());
         assertEquals(50, pallo.getX(), 0.1);
         assertEquals(50, pallo.getY(), 0.1);
     }
@@ -94,29 +94,31 @@ public class PalloTest {
     @Test
     public void jarruTesti() {
         pallo.setVx(3);
-        pallo.setVy(3);
         assertEquals(3, pallo.getVx(), 0.1);
-        assertEquals(3, pallo.getVy(), 0.1);
-        pallo.jarruta(2, 1);
+        pallo.jarruta(2);
         assertEquals(1, pallo.getVx(), 0.1);
-        assertEquals(2, pallo.getVy(), 0.1);
-        pallo.jarruta(0, 4);
-        assertEquals(0, pallo.getVy(), 01);
+    }
+
+    @Test
+    public void jarruttaaVektorinSuuntaan() {
+        pallo.setVx(3);
+        pallo.setVy(5);
+        double pituus = pallo.getNopeusvektori().pituus();
+        assertEquals(3, pallo.getVx(), 0.1);
+        pallo.jarruta(2);
+        assertEquals(pallo.getNopeusvektori().pituus(), pituus - 2, 0.1);
     }
 
     @Test
     public void jarruTestiNegatiiviselleNopeudelle() {
         pallo.setVx(-3);
-        pallo.setVy(-3);
         assertEquals(-3, pallo.getVx(), 0.1);
-        assertEquals(-3, pallo.getVy(), 0.1);
-        pallo.jarruta(2, 1);
+        pallo.jarruta(2);
         assertEquals(-1, pallo.getVx(), 0.1);
-        assertEquals(-2, pallo.getVy(), 0.1);
-        pallo.jarruta(0, 4);
-        assertEquals(0, pallo.getVy(), 0.1);
+        pallo.jarruta(0);
+        assertEquals(0, pallo.getVy(), 0);
     }
-    
+
     @Test
     public void stoppiTesti() {
         assertEquals(false, pallo.liikkuuko());
@@ -124,16 +126,14 @@ public class PalloTest {
         pallo.setVy(-3);
         assertEquals(true, pallo.liikkuuko());
         pallo.setVx(-3);
-        pallo.jarruta(2, 1);
+        pallo.jarruta(1);
         assertEquals(true, pallo.liikkuuko());
-        pallo.jarruta(0, 4);
-        assertEquals(true, pallo.liikkuuko());
-        pallo.jarruta(9.125, 2);
+        pallo.jarruta(9);
         assertEquals(false, pallo.liikkuuko());
         pallo.setVx(-0.00000000009);
 //        System.out.println(pallo.getVx() + " " + pallo.getVy());
         assertEquals(true, pallo.liikkuuko());
-        
-        
+
+
     }
 }

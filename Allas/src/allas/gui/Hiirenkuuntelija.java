@@ -35,7 +35,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
             case 1:
                 if (this.peli.valkoinenPalloSallitussaPaikassa()) {
                     this.peli.setPelitilanne(2);
-                    this.peli.getPallot().get(0).setPussissa(false);
+                    this.peli.getAlusta().getPallot().get(0).setPussissa(false);
                 }
                 break;
             case 2:
@@ -43,7 +43,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
                 this.peli.asetaLyonninSuunta();
                 break;
             case 3:
-                this.peli.asetaNopeus();
+                this.peli.asetaLyonninNopeusJaLyo();
         }
 
 

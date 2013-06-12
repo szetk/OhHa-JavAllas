@@ -1,45 +1,43 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package allas.domain;
 
-/**
- * Tämä luokka on kuvaus pelaajasta.
- *
- * @author Sami
- */
+
 public class Pelaaja {
 
-    private String nimi;
-    private boolean hasIsotPallot;
-    private boolean vuorossa;
-    private int maalattuPussi;
+    private String nimi; // Pelaajan nimi
+    private int maalattuPussi; // Viimeksi maalatun pussin numero (1-6 numeroituna vasemmalta oikealle ja ylhäältä alas)
+    private boolean hasIsotPallot; // Kertoo onko tällä pelaajalla isot vai pienet pallot
+//    private boolean vuorossa; // Kertoo onko pelaaja vuorossa tällä hetkellä
+    private boolean palloRyhmaValittu; // Tämä on true, mikäli pelissä on valittu palloryhmät, ei tarvita jos boolean voi olla null
 
     public Pelaaja() {
-    }
-
-    public boolean getVuorossa() {
-        return this.vuorossa;
+        this.palloRyhmaValittu = false;
+        this.maalattuPussi = 0;
     }
     
-    public int getMaalattuPussi(){
-        return this.maalattuPussi;
+        
+    public boolean onOma(int pallonNumero){
+        if (!this.palloRyhmaValittu){
+            return true;
+        }
+        if(this.hasIsotPallot && pallonNumero >= 8){
+            return true;
+        } if (!this.hasIsotPallot && pallonNumero <= 8){
+            return true;
+        }
+        return false;
     }
 
-    public void setVuorossa(Boolean totuusarvo) {
-        this.vuorossa = totuusarvo;
-    }
+
+//    public void setVuorossa(Boolean totuusarvo) {
+//        this.vuorossa = totuusarvo;
+//    }
     public void setHasIsotPallot(Boolean hasIsotPallot){
         this.hasIsotPallot = hasIsotPallot;
+        this.palloRyhmaValittu = true;
     }
     
     public void setMaalattuPussi(int pussi){
         this.maalattuPussi = pussi;
-    }
-    
-    public boolean hasIsotPallot(){
-        return this.hasIsotPallot;
     }
     
     public void setNimi(String nimi){
@@ -49,13 +47,20 @@ public class Pelaaja {
     public String getNimi(){
         return this.nimi;
     }
+
+    public boolean getPalloRyhmaValittu() {
+        return this.palloRyhmaValittu;
+    }
+
+//    public boolean getVuorossa() {
+//        return this.vuorossa;
+//    }
     
-    public boolean onOma(int n){
-        if(this.hasIsotPallot && n >= 8){
-            return true;
-        } if (!this.hasIsotPallot && n <= 8){
-            return true;
-        }
-        return false;
+    public int getMaalattuPussi(){
+        return this.maalattuPussi;
+    }
+
+    public boolean hasIsotPallot(){
+        return this.hasIsotPallot;
     }
 }

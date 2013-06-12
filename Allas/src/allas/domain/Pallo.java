@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Tämä luokka kuvaa palloa biljardipelissä.
+ * Tämä luokka kuvaa biljardipelin palloa.
  *
  * @author Sami
  */
@@ -15,14 +15,20 @@ public class Pallo {
     private double y;
     private double vx; // vauhti
     private double vy;
-    private int n; // pallon numero
+    private int pallonNumero; // pallon numero
     private int r;
     private boolean pussissa;
-
-    public Pallo(double x, double y, int n, int r) {
+/**
+ * 
+ * @param x Pallon paikan x-koordinaatti
+ * @param y Pallon paikan y-koordinaatti
+ * @param pallonNumero Pallon numero
+ * @param r Pallon säde
+ */
+    public Pallo(double x, double y, int pallonNumero, int r) {
         this.x = x;
         this.y = y;
-        this.n = n;
+        this.pallonNumero = pallonNumero;
         this.vx = 0;
         this.vy = 0;
         this.r = r;
@@ -30,7 +36,7 @@ public class Pallo {
     }
 
     /**
-     * Tämä metodi siirtää pallon uuteen paikkaan.
+     * Tämä metodi siirtää pallon uuteen paikkaan pallon nopeuden mukaisesti.
      */
     public void liikuta() {
         this.x += this.vx;
@@ -38,22 +44,24 @@ public class Pallo {
     }
 
     /**
-     * Tämä metodi hidastaa vähentää pallon liikenopeutta.
+     * Tämä metodi hidastaa pallon liikettä.
+     * @see #jarrutaNegatiivista(double, double) 
+     * @see #jarrutaPositiivista(double, double) 
      *
-     * @param kitka 
+     * @param kitka Pallon nopeutta vähentävä kitka
      */
     public void jarruta(double kitka) {
-        
+
         Vektori kitkavektori = this.getNopeusvektori().normalisoi();
-        
-        
+
+
         kitkavektori = kitkavektori.tulo(kitka);
 //        System.out.println(kitkavektori.pituus());
-        
+
         double deltaX = Math.abs(kitkavektori.getX());
         double deltaY = Math.abs(kitkavektori.getY());
 //        System.out.println(deltaX);
-        
+
         if (vx < 0) {
             setVx(jarrutaNegatiivista(vx, deltaX));
         } else {
@@ -67,7 +75,12 @@ public class Pallo {
         }
 
     }
-
+/**
+ * Tämä metodi jarruttaa pallon liikenopeuden komponentin arvoa, kun komponentti on negatiivinen. Tätä käytetään sekä x- että y-koordinaateille.
+ * @param v Vähennettävä nopeuden komponentti
+ * @param deltaV Vähennyksen suuruus
+ * @return Palauttaa nopeudnek omponentin vähennetyn arvon
+ */
     public double jarrutaNegatiivista(double v, double deltaV) {
         if (v * (-1) >= deltaV) {
             v += deltaV;
@@ -76,7 +89,12 @@ public class Pallo {
         }
         return v;
     }
-
+/**
+ * Tämä metodi jarruttaa pallon liikenopeuden komponentin arvoa, kun komponentti on positiivinen. Tätä käytetään sekä x- että y-koordinaateille.
+ * @param v Vähennettävä nopeuden komponentti
+ * @param deltaV Vähennyksen suuruus
+ * @return Palauttaa nopeudnek omponentin vähennetyn arvon
+ */
     public double jarrutaPositiivista(double v, double deltaV) {
         if (v >= deltaV) {
             v -= deltaV;
@@ -87,11 +105,11 @@ public class Pallo {
     }
 
     /**
-     * Tämä metodi laskee pallon ja pisteen välisen etäisyyden.
+     * Tämä metodi laskee pallon ja parametrinä saadun pisteen välisen etäisyyden.
      *
      * @param x Pisteen x-koordinaatti.
      * @param y Pisteen y-koordinaatti.
-     * @return
+     * @return Palauttaa etäisyyden arvon.
      */
     public double etaisyys(double x, double y) {
         double deltax = this.x - x;
@@ -99,20 +117,13 @@ public class Pallo {
         deltax *= deltax;
         deltay *= deltay;
         return (double) Math.sqrt(deltax + deltay);
-    } 
-
-    public boolean getPussissa() {
-        return this.pussissa;
     }
 
-    public void setPussissa(Boolean pussissa) {
-        this.pussissa = pussissa;
-    }
 
     /**
-     * Tämä metodi kertoo liikkuuko pallo tarkkuuden rajoissa.
-     *
-     * @return Palauttaa totuusarvona pallon liiketilan.
+     * Tämä metodi tarkastaa liikkuuko pallo. 
+     * 
+     * @return Palautetaan true, jos pallo liikkuu ja false, mikäli ei.
      */
     public boolean liikkuuko() {
         if (this.vx > 0 || this.vx < -0) {
@@ -123,9 +134,44 @@ public class Pallo {
         }
         return false;
     }
+    
+    /**
+     * Tämä metodi piirtää pallon parametrinä saatuun grafiikkaan. Pienet pallot ovat vihreitä ja isot sinisiä. 8-pallo on musta ja lyöntipallo valkoinen.
+     * @param graphics Grafiikka, johon piirretään
+     * @param seina Peli-luokan seinän paksuus tarvitaan paikan laskemiseen.
+     */
+        public void piirra(Graphics graphics, int seina) {
+        graphics.setColor(Color.BLACK);
+        if (this.pallonNumero == 0) {
+            graphics.setColor(Color.WHITE);
+        } else if (this.pallonNumero < 8) {
+            graphics.setColor(Color.GREEN);
+        } else if (this.pallonNumero > 8) {
+            graphics.setColor(Color.BLUE);
+        } 
+        graphics.fillOval((int) this.x + seina - this.r, (int) this.y + seina - this.r, 2 * this.r, 2 * this.r);
 
-    public int getN() {
-        return n;
+//        if (this.pallonNumero == 8){
+//            graphics.setColor(Color.WHITE);
+//            graphics.fillOval((int) this.x + seina - this.r/2, (int) this.y + seina - this.r/2, this.r, this.r);
+//        }
+//        
+//        graphics.setColor(Color.BLACK);
+//        if (this.pallonNumero < 10) {
+//            graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 3, (int) this.y + seina + 3);
+//        } else {
+//            graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 6, (int) this.y + seina + 3);
+//        }
+
+    }
+    
+    public boolean getPussissa() {
+        return this.pussissa;
+    }
+
+   
+    public int getPallonNumero() {
+        return pallonNumero;
     }
 
     public double getVx() {
@@ -144,8 +190,8 @@ public class Pallo {
         return y;
     }
 
-    public void setN(int n) {
-        this.n = n;
+    public void setPallonNumero(int pallonNumero) {
+        this.pallonNumero = pallonNumero;
     }
 
     public void setVx(double vx) {
@@ -163,6 +209,10 @@ public class Pallo {
 
     public void setY(double y) {
         this.y = y;
+    }
+    
+     public void setPussissa(Boolean pussissa) {
+        this.pussissa = pussissa;
     }
 
     public Vektori getPaikkavektori() {
@@ -185,21 +235,8 @@ public class Pallo {
 
     /**
      * Tämä metodi piirtää pallon parametrina saatuun grafiikkaan. Lyöntipallo
-     * on valkoinen, 8-pallo musta, muut pienet vihreitä ja suuret sinisiä.
+     * on valkoinen, 8-pallo musta. Muista palloista pienet ovat vihreitä ja suuret sinisiä.
      *
      * @param graphics Parametrina saatu grafiikka.
      */
-    public void piirra(Graphics graphics, int seina) {
-        if (this.n == 0) {
-            graphics.setColor(Color.WHITE);
-        } else if (this.n < 8) {
-            graphics.setColor(Color.GREEN);
-        } else if (this.n > 8) {
-            graphics.setColor(Color.BLUE);
-        } else {
-            graphics.setColor(Color.BLACK);
-        }
-
-        graphics.fillOval((int) this.x + seina - this.r, (int) this.y + seina - this.r, 2 * this.r, 2 * this.r);
-    }
 }

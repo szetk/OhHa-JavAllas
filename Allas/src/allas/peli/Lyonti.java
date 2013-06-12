@@ -1,76 +1,72 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package allas.peli;
 
 import allas.domain.Pallo;
 import allas.domain.Pelaaja;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 
-/**
- *
- * @author Sami
- */
 public class Lyonti {
 
-    public int kivenEnsimmainenOsuma;
-    public int tormayksetSeinaan;
-    public boolean kiviPussiin;
-    private ArrayList<Integer> pallot;
-    private Pelaaja pelaaja;
-    private boolean aloitustilanne;
+    private Pelaaja pelaaja; // Vuorossa oleva pelaaja
+    public int kivenEnsimmainenOsuma; // Pallon, johon valkoinen pallo osuu ensimmäisenä, numero
+    public int tormayksetSeinaan; // Luku seiniin osuneista törmäyksistä.
+    public ArrayList<Integer> pudonneetPallot; // Lista lyönnin aikana pudonneista palloista
+    private boolean aloitustilanne; // Onko aloitustilanne
+    private JLabel tekstikentta; // Käyttöliittymän tekstikenttä, johon tulostetaan
 
-    public Lyonti(Pelaaja pelaaja, Boolean aloitustilanne) {
-        this.pallot = new ArrayList<>();
+    public Lyonti(Pelaaja pelaaja, Boolean aloitustilanne, JLabel tekstikentta) {
+        this.pudonneetPallot = new ArrayList<>();
         this.pelaaja = pelaaja;
         this.aloitustilanne = aloitustilanne;
         this.kivenEnsimmainenOsuma = 0;
         this.tormayksetSeinaan = 0;
-        this.kiviPussiin = false;
+        this.tekstikentta = tekstikentta;
     }
 
     public void add(int pallonNumero) {
-        this.pallot.add(pallonNumero);
+        this.pudonneetPallot.add(pallonNumero);
     }
 
     public boolean faul() {
-        if (kivenEnsimmainenOsuma == 0) {
-            System.out.println("Ei osunut kohdepalloon");
+        if (this.pudonneetPallot.contains(0)) {
+            this.tekstikentta.setText("Faul! - Löit kiven pussiin");
+            return true;
+        }
+        if (this.kivenEnsimmainenOsuma == 0) {
+            this.tekstikentta.setText("Faul! - Ei osunut kohdepalloon");
             return true;
         }
         if (this.aloitustilanne && this.tormayksetSeinaan < 4) {
-            System.out.println("Ei osunut tarpeeksi seinään");
+            this.tekstikentta.setText("Faul! - Ei osunut tarpeeksi seinään");
             return true;
         }
 
         if (!this.aloitustilanne && !this.pelaaja.onOma(this.kivenEnsimmainenOsuma)) {
-            System.out.println("Osuit ensiksi vastustajan palloon");
+            this.tekstikentta.setText("Faul! - Et osunut ensimmäisenä omaan kohdepalloosi");
             return true;
         }
 
-        if (!this.aloitustilanne && this.tormayksetSeinaan == 0 && this.pallot.isEmpty()) { // jos ei osu seinään, eikä yksikään pallo mene pussiin, tulee käsipallo
-            System.out.println("Et osunut seinään tai saanut yhtään palloa pussiin");
+        if (!this.aloitustilanne && this.tormayksetSeinaan == 0 && this.pudonneetPallot.isEmpty()) { // jos ei osu seinään, eikä yksikään pallo mene pussiin, tulee käsipallo
+            this.tekstikentta.setText("Faul! - Et osunut seinään tai saanut yhtään palloa pussiin");
             return true;
         }
 
-        if (this.kiviPussiin) {
-            System.out.println("Löit kiven pussiin");
-            return true;
-        }
         return false;
     }
 
     public boolean vuoronVaihto() {
-        if (this.aloitustilanne && pallot.isEmpty()) {
+        if (this.aloitustilanne && pudonneetPallot.isEmpty()) {
             return true;
         }
         if (kivenEnsimmainenOsuma == 0) {
             return false;
         }
-        if (this.kiviPussiin || vastustajanPalloja()) {
+        if (this.pudonneetPallot.contains(0)) {
             return true;
-        } else if (this.pallot.isEmpty()) {
+        }
+        if (vastustajanPalloja()) {
+            return true;
+        } else if (this.pudonneetPallot.isEmpty()) {
             return true;
         }
 
@@ -78,7 +74,7 @@ public class Lyonti {
     }
 
     public Boolean vastustajanPalloja() {
-        for (int pallonNumero : pallot) {
+        for (int pallonNumero : this.pudonneetPallot) {
             if (!this.pelaaja.onOma(pallonNumero)) {
                 return true;
             }

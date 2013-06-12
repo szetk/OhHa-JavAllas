@@ -1,13 +1,11 @@
 package peli;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
-
 import allas.domain.Pallo;
-import allas.peli.Peli;
-import java.util.ArrayList;
+import allas.peli.Alusta;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -15,11 +13,11 @@ import static org.junit.Assert.*;
  *
  * @author Sami
  */
-public class FysiikkaTest {
+public class AlustanFysiikkaTest {
 
-    Peli peli;
+    Alusta alusta;
 
-    public FysiikkaTest() {
+    public AlustanFysiikkaTest() {
     }
 
     @BeforeClass
@@ -32,9 +30,11 @@ public class FysiikkaTest {
 
     @Before
     public void setUp() {
-        peli = new Peli(1000, 400, 10, 30, 30);
-        peli.getPallot().get(0).setX(50);
-        peli.getPallot().get(0).setY(50);
+        alusta = new Alusta(1000, 400, 10, 30, 30);
+        alusta.generoiPallot();
+        alusta.asetaPallot(1000 * 6 / 8, 400 / 2);
+        alusta.getPallot().get(0).setX(50);
+        alusta.getPallot().get(0).setY(50);
     }
 
     @After
@@ -46,44 +46,49 @@ public class FysiikkaTest {
     // @Test
     // public void hello() {}
 
+    public void asetaVauhti() {
+    }
+
     @Test
     public void putoaakoPallo() {
-        peli.getPallot().get(0).setX(500);
-        peli.getPallot().get(0).setY(350);
-        peli.asetaVauhti(peli.getPallot().get(0), 0, 2);
+        alusta.getPallot().get(0).setX(500);
+        alusta.getPallot().get(0).setY(350);
+        alusta.getPallot().get(0).setVx(0);
+        alusta.getPallot().get(0).setVy(2);
         for (int i = 0; i < 50; i++) {
-            peli.getPallot().get(0).liikuta();
-                   System.out.println(peli.getPallot().get(0).getX() + ", " + peli.getPallot().get(0).getY());
-            if (peli.putoaaPussiin(peli.getPallot().get(0)) != 0) {
-                if (peli.getPallot().get(0).getPussissa()) {
+            alusta.getPallot().get(0).liikuta();
+            System.out.println(alusta.getPallot().get(0).getX() + ", " + alusta.getPallot().get(0).getY());
+            if (alusta.putoaaPussiin(alusta.getPallot().get(0)) != 0) {
+                if (alusta.getPallot().get(0).getPussissa()) {
                     continue;
                 }
-                peli.getPallot().get(0).setPussissa(true);
+                alusta.getPallot().get(0).setPussissa(true);
                 System.out.println("pallo putosi pussiin");
             }
         }
-        assertEquals(true, peli.getPallot().get(0).getPussissa());
+        assertEquals(true, alusta.getPallot().get(0).getPussissa());
 
 
     }
 
     @Test
     public void putoaakoPalloKulmapussiin() {
-        peli.getPallot().get(0).setX(970);
-        peli.getPallot().get(0).setY(370);
-        peli.asetaVauhti(peli.getPallot().get(0), 1, 1);
+        alusta.getPallot().get(0).setX(970);
+        alusta.getPallot().get(0).setY(370);
+        alusta.getPallot().get(0).setVx(1);
+        alusta.getPallot().get(0).setVy(1);
         for (int i = 0; i < 50; i++) {
-            peli.getPallot().get(0).liikuta();
-//                   System.out.println(peli.getPallot().get(0).getX() + ", " + peli.getPallot().get(0).getY());
-            if (peli.putoaaPussiin(peli.getPallot().get(0)) != 0) {
-                if (peli.getPallot().get(0).getPussissa()) {
+            alusta.getPallot().get(0).liikuta();
+//                   System.out.println(alusta.getPallot().get(0).getX() + ", " + alusta.getPallot().get(0).getY());
+            if (alusta.putoaaPussiin(alusta.getPallot().get(0)) != 0) {
+                if (alusta.getPallot().get(0).getPussissa()) {
                     continue;
                 }
-                peli.getPallot().get(0).setPussissa(true);
+                alusta.getPallot().get(0).setPussissa(true);
 //                System.out.println("pallo putosi kulmapussiin");
             }
         }
-        assertEquals(true, peli.getPallot().get(0).getPussissa());
+        assertEquals(true, alusta.getPallot().get(0).getPussissa());
     }
 
 //    @Test
@@ -92,14 +97,15 @@ public class FysiikkaTest {
 //    }
     @Test
     public void tunnistetaankoTormaysSeinaan() {
-        Pallo pallo = peli.getPallot().get(0);
-        peli.asetaVauhti(pallo, 0, -2.5);
+        Pallo pallo = alusta.getPallot().get(0);
+        alusta.getPallot().get(0).setVx(0);
+        alusta.getPallot().get(0).setVy(-2.5);
         boolean tunnistettu = false;
 
         for (int i = 0; i < 20; i++) {
             pallo.liikuta();
 //            System.out.println(pallo.getX() + ", " + pallo.getY());
-            if (peli.osuuSeinaan(pallo) && tunnistettu == false) {
+            if (alusta.osuuSeinaan(pallo) && tunnistettu == false) {
                 tunnistettu = true;
 //                System.out.println("Osui seinään paikassa:" + pallo.getX() + ", " + pallo.getY());
             }
@@ -109,14 +115,15 @@ public class FysiikkaTest {
 
     @Test
     public void tunnistetaankoVinoTormaysSeinaan() {
-        Pallo pallo = peli.getPallot().get(0);
-        peli.asetaVauhti(pallo, 1.1358, -2.13545);
+        Pallo pallo = alusta.getPallot().get(0);
+        pallo.setVx(1.1358);
+        pallo.setVy(-2.13545);
         boolean tunnistettu = false;
 
         for (int i = 0; i < 20; i++) {
             pallo.liikuta();
 //            System.out.println(pallo.getX() + ", " + pallo.getY());
-            if (peli.osuuSeinaan(pallo) && tunnistettu == false) {
+            if (alusta.osuuSeinaan(pallo) && tunnistettu == false) {
                 tunnistettu = true;
 //                System.out.println("Osui seinään paikassa:" + pallo.getX() + ", " + pallo.getY());
             }
@@ -126,17 +133,18 @@ public class FysiikkaTest {
 
     @Test
     public void tunnistetaankoTormaysPalloon() {
-        Pallo pallo = peli.getPallot().get(0);
+        Pallo pallo = alusta.getPallot().get(0);
         Pallo pallo2 = new Pallo(70, 50, 2, 10);
 
-        peli.asetaVauhti(pallo, 2, 0);
+        pallo.setVx(2);
+        pallo.setVy(0);
         boolean tunnistettu = false;
 
         for (int i = 0; i < 10; i++) {
             pallo.liikuta();
 //            System.out.println(pallo.getX() + ", " + pallo.getY());
 //            System.out.println(pallo2.getX() + ", " + pallo2.getY());
-            if (peli.osuuPalloon(pallo, pallo2) && tunnistettu == false) {
+            if (alusta.osuuPalloon(pallo, pallo2) && tunnistettu == false) {
                 tunnistettu = true;
 //                System.out.println("Osui palloon");
             }
@@ -147,11 +155,14 @@ public class FysiikkaTest {
 
     @Test
     public void tunnistetaankoTormaysLiikkuvaanPalloon() {
-        Pallo pallo = peli.getPallot().get(0);
+        Pallo pallo = alusta.getPallot().get(0);
         Pallo pallo2 = new Pallo(70, 50, 2, 10);
 
-        peli.asetaVauhti(pallo, 3, 0);
-        peli.asetaVauhti(pallo2, 1, 0);
+        pallo.setVx(3);
+        pallo.setVy(0);
+        pallo2.setVx(1);
+        pallo2.setVy(0);
+
         boolean tunnistettu = false;
 
         for (int i = 0; i < 10; i++) {
@@ -159,7 +170,7 @@ public class FysiikkaTest {
             pallo2.liikuta();
 //            System.out.println(pallo.getX() + ", " + pallo.getY());
 //            System.out.println(pallo2.getX() + ", " + pallo2.getY());
-            if (peli.osuuPalloon(pallo, pallo2) && tunnistettu == false) {
+            if (alusta.osuuPalloon(pallo, pallo2) && tunnistettu == false) {
                 tunnistettu = true;
 //                System.out.println("Osui palloon");
             }
@@ -167,6 +178,4 @@ public class FysiikkaTest {
         assertEquals(true, tunnistettu);
 
     }
-    
-    
 }

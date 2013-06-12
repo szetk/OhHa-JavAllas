@@ -24,10 +24,58 @@ public class Nappaimistonkuuntelija implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        if (ke.getKeyCode() == KeyEvent.VK_M) {
-            System.out.println("Maalataan pussi!");
-            System.out.println("Anna maalattavan pussin numero: ");
-            this.peli.maalaa();
+//        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+//            this.peli.lueSyote();
+//        }
+//        if (ke.getKeyCode() == KeyEvent.VK_F6) {
+//            this.peli = new Peli(1000, 500, 40, 15, 25);
+//        }
+
+        switch (ke.getKeyCode()) {
+            case KeyEvent.VK_I:
+                if (!this.peli.getVuorossaOlevaPelaaja().getPalloRyhmaValittu() && this.peli.odottaaVastausta) {
+                    this.peli.odottaaVastausta = false;
+                    this.peli.getVuorossaOlevaPelaaja().setHasIsotPallot(true);
+                    this.peli.getVastustaja().setHasIsotPallot(false);
+                    this.peli.sout("Valitsit isot pallot (siniset)!");
+                }
+                break;
+            case KeyEvent.VK_P:
+                if (!this.peli.getVuorossaOlevaPelaaja().getPalloRyhmaValittu() && this.peli.odottaaVastausta) {
+                    this.peli.odottaaVastausta = false;
+                    this.peli.getVuorossaOlevaPelaaja().setHasIsotPallot(false);
+                    this.peli.getVastustaja().setHasIsotPallot(true);
+                    this.peli.sout("Valitsit pienet pallot (vihreät)!");
+                }
+                break;
+            case KeyEvent.VK_1:
+                this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(1);
+                this.peli.sout("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                break;
+            case KeyEvent.VK_2:
+                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(2);
+                    this.peli.sout("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                break;
+            case KeyEvent.VK_3:
+                this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(3);
+                    this.peli.sout("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                break;
+            case KeyEvent.VK_4:
+                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(4);
+                    this.peli.sout("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                break;
+            case KeyEvent.VK_5:
+                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(5);
+                    this.peli.sout("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                break;
+            case KeyEvent.VK_6:
+                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(6);
+                    this.peli.sout("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                break;
+                case KeyEvent.VK_F6:;
+//                    this.peli.aloitaAlusta();
+//                this.peli.setPelitilanne(4);
+                break;
         }
     }
 

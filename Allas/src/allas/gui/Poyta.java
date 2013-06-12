@@ -1,5 +1,6 @@
 package allas.gui;
 
+import allas.peli.Alusta;
 import allas.peli.Peli;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  * Tämä luokka on käyttöjärjestelmän piirtoalusta. Tämä sisältää pöydän
- * piirto-ohjeet.
+ * piirtämisen.
  *
  * @author Sami
  */
@@ -19,25 +20,23 @@ public class Poyta extends JPanel implements Paivitettava {
     private int leveys;
     private int seina;
     private int reijanKoko;
-
+/**
+ * 
+ * @param alusta Tätä käytetään tarvittavien mittojen noutamiseen, jotta piirretään pelin mukainen pöytä
+ */
     public Poyta(Peli peli) {
         this.peli = peli;
-        this.pituus = this.peli.getPituus();
-        this.leveys = this.peli.getLeveys();
-        this.seina = this.peli.getSeina();
-        this.reijanKoko = this.peli.getReijanKoko();
+        Alusta alusta = peli.getAlusta();
+        this.pituus = alusta.getPituus();
+        this.leveys = alusta.getLeveys();
+        this.seina = alusta.getSeina();
+        this.reijanKoko = alusta.getPussinSade();
         super.setBackground(Color.GREEN);
     }
 
     @Override
     public void paintComponent(Graphics graphics) {
-//        super.paintComponent(graphics);
-
-//        graphics.fillRect(0, 0, this.pituus, this.seina;
-//        graphics.fillRect(0, 0, this.seina, this.leveys);
-//        graphics.fillRect(0, this.leveys - this.seina, this.pituus, this.seina);
-//        graphics.fillRect(this.pituus - this.seina, 0, this.seina, this.leveys);
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(Color.GRAY);
         graphics.fillRect(0, 0, this.pituus + 200, this.leveys + 200);
         
         graphics.setColor(Color.ORANGE);
@@ -46,12 +45,9 @@ public class Poyta extends JPanel implements Paivitettava {
         graphics.setColor(Color.PINK);
         graphics.fillRect(this.seina, this.seina, this.pituus, this.leveys);
 
-//        graphics.setColor(Color.BROWN);
-//        graphics.fillRect(0, 0, this.pituus, this.leveys);
-
         graphics.setColor(Color.BLACK);
 
-        // pussit, tätä vois vähän kaunistaa
+        // pussit
         int pituus1 = this.seina - this.reijanKoko;
         int pituus2 = (this.pituus + this.seina) / 2;
         int pituus3 = this.pituus + this.seina - this.reijanKoko;
