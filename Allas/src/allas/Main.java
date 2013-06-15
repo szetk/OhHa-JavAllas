@@ -1,10 +1,8 @@
 package allas;
 
-import allas.domain.Pelaaja;
 import allas.gui.Kayttoliittyma;
 import allas.peli.Alusta;
 import allas.peli.Peli;
-import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -17,14 +15,14 @@ public class Main {
 //        SwingUtilities.invokeLater(kayttis);
         thread.start();
 
-        while (kayttis.getPaivitettava() == null) {
+        while (kayttis.getPoyta() == null) {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException ex) {
                 System.out.println("Piirtoalustaa ei ole vielä luotu.");
             }
         }
-        peli.setPaivitettava(kayttis.getPaivitettava());
+        peli.setPoyta(kayttis.getPoyta());
         peli.aja();
         System.out.println("Peli päättyi!");
     

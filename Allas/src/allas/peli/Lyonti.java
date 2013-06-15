@@ -1,18 +1,20 @@
 package allas.peli;
 
-import allas.domain.Pallo;
 import allas.domain.Pelaaja;
+import allas.tools.Vektori;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class Lyonti {
 
-    private Pelaaja pelaaja; // Vuorossa oleva pelaaja
+    private Pelaaja pelaaja; // Pelaaja joka suorittaa tämän lyönnin
     public int kivenEnsimmainenOsuma; // Pallon, johon valkoinen pallo osuu ensimmäisenä, numero
     public int tormayksetSeinaan; // Luku seiniin osuneista törmäyksistä.
     public ArrayList<Integer> pudonneetPallot; // Lista lyönnin aikana pudonneista palloista
     private boolean aloitustilanne; // Onko aloitustilanne
     private JLabel tekstikentta; // Käyttöliittymän tekstikenttä, johon tulostetaan
+    private double[] lyontivoima; // Selitetään konstruktorissa
+     private Vektori lyonninSuunta; // Vektori, jota käytetään lyönnin suunnan asettamiseen
 
     public Lyonti(Pelaaja pelaaja, Boolean aloitustilanne, JLabel tekstikentta) {
         this.pudonneetPallot = new ArrayList<>();
@@ -21,6 +23,9 @@ public class Lyonti {
         this.kivenEnsimmainenOsuma = 0;
         this.tormayksetSeinaan = 0;
         this.tekstikentta = tekstikentta;
+
+        double[] d = {0, 0.2, 20}; // Ensimmäinen on lyönnin voima, toinen lyönnin kasvu iteraation aikana(nopeudenvalitsinta varten) ja kolmas maksimivoima
+        this.lyontivoima = d;
     }
 
     public void add(int pallonNumero) {
@@ -80,5 +85,17 @@ public class Lyonti {
             }
         }
         return false;
+    }
+
+    public void setLyonninSuunta(Vektori lyonninSuunta) {
+        this.lyonninSuunta = lyonninSuunta;
+    }
+
+    public double[] getLyontivoima() {
+        return this.lyontivoima;
+    }
+    
+    public Vektori getLyonninSuunta(){
+        return this.lyonninSuunta;
     }
 }

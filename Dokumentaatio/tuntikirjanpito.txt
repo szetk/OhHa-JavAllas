@@ -23,3 +23,8 @@ Päivä	Aika	Tehtävä
 9.6.	1,5h	Maalausta
 10.6.	2h	Kaikenlaista sekoilua
 11.6.	5h	Javadoc, kommentointi, refaktorointi, .jar yms...
+12.6.	2h	Testejä, ohjelmistotekniikan menetelmiä
+13.6.	1h	Ohjelmistotekniikan menetelmiä
+14.6.	1h	Ohjelmistotekniikan menetelmiä
+15.6. 	3h	Luokkakaavio, refaktorointi, pieni muokkaus
+

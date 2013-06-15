@@ -1,0 +1,22 @@
+Käyttöohjeet
+
+Alaoikealla näkyy vuorossa olevan pelaajan tiedot. 
+Pussit on numeroitu numeroin 1-6 alkaen vasemmalta oikealle ja ensin ylärivi, sitten alarivi. 
+
+Pelin avautuessa pöydällä on oikealla puolella kohdepallojen alkuasetelma ja oikealla puolella valkoinen viiva. Pelin aloittava pelaaja asettaa lyöntipallon(myös valkoinen pallo tai kivi) pöydälle klikkaamalla. Aloituksessa lyöntipallo tulee sijoittaa tämän viivan vasemmalle puolelle. 
+
+Lyöntipallon asetuksen jälkeen pelaaja saa valita lyönnin suunnan. Tässä vaiheessa lyöntipallon ja hiiren osoittimen väliin piirtyy viiva, jonka suuntaisesti lyöty pallo lähtee liikkumaan. Aloitustilanteeta pallo tulee lyödä oikealle. Valitta suunta lyödään lukkoon hiirtä klikkaamalla.
+
+Lyöntisuunnan valinnan jälkeen tulee pelaajan valita lyöntivoimakkuus. Nyt ruudun alaoikealla näkyy lyöntivoimapalkki, joka kuvastaa lyönnin voimakkuutta. Mitä suurempi on punainen palkki, sitä suurempi on lyöntivoimakkuus. Lyöntivoimakkuus valitaan hiirtä klikkaamalla (klikkauksen kohdalla ei ole merkitystä).
+
+Tämän jälkeen lyöntipallo lähtee liikkeelle.
+
+
+Kun pelissä on saatu lyötyä jokin kohdepallo sisään (ei siis lyöntipallo tai 8-pallo) saa pallon pallon lyönyt pelaaja valita palloryhmän itselleen. Mikäli palloryhmää ei valita, saa seuraavaksi vuoroon tullut pelaaja valita palloryhmän. 
+
+Missä tahansa pelin vaiheessa voi vuorossa oleva pelaaja maalata 8-pallon pussiin painamalla pussin numeroa vastaavaa näppäintä (1-6). 
+
+
+
+
+Säännöt:

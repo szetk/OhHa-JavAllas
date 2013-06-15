@@ -3,7 +3,7 @@ package allas.domain;
 
 public class Pelaaja {
 
-    private String nimi; // Pelaajan nimi
+    private String nimi; // Pelaajan nimi, lähinnä jatkokehittelyn varalta
     private int maalattuPussi; // Viimeksi maalatun pussin numero (1-6 numeroituna vasemmalta oikealle ja ylhäältä alas)
     private boolean hasIsotPallot; // Kertoo onko tällä pelaajalla isot vai pienet pallot
 //    private boolean vuorossa; // Kertoo onko pelaaja vuorossa tällä hetkellä

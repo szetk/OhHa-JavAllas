@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Tämä luokka kuvaa biljardipelin palloa.
+ * Tämä luokka kuvaa biljardipelin palloa, jolla on paikka, nopeus, säde ja numero. Lisäksi pallo voi olla pussitettuna.
  *
  * @author Sami
  */
@@ -16,22 +16,22 @@ public class Pallo {
     private double vx; // vauhti
     private double vy;
     private int pallonNumero; // pallon numero
-    private int r;
-    private boolean pussissa;
+    private int pallonSade;
+    private boolean pussissa; // Kertoo onko pallo pussissa, vai vielä pelissä
 /**
  * 
  * @param x Pallon paikan x-koordinaatti
  * @param y Pallon paikan y-koordinaatti
  * @param pallonNumero Pallon numero
- * @param r Pallon säde
+ * @param pallonSade Pallon säde
  */
-    public Pallo(double x, double y, int pallonNumero, int r) {
+    public Pallo(double x, double y, int pallonNumero, int pallonSade) {
         this.x = x;
         this.y = y;
         this.pallonNumero = pallonNumero;
         this.vx = 0;
         this.vy = 0;
-        this.r = r;
+        this.pallonSade = pallonSade;
         this.pussissa = false;
     }
 
@@ -149,19 +149,21 @@ public class Pallo {
         } else if (this.pallonNumero > 8) {
             graphics.setColor(Color.BLUE);
         } 
-        graphics.fillOval((int) this.x + seina - this.r, (int) this.y + seina - this.r, 2 * this.r, 2 * this.r);
+        graphics.fillOval((int) this.x + seina - this.pallonSade, (int) this.y + seina - this.pallonSade, 2 * this.pallonSade, 2 * this.pallonSade);
 
-//        if (this.pallonNumero == 8){
-//            graphics.setColor(Color.WHITE);
-//            graphics.fillOval((int) this.x + seina - this.r/2, (int) this.y + seina - this.r/2, this.r, this.r);
-//        }
-//        
-//        graphics.setColor(Color.BLACK);
-//        if (this.pallonNumero < 10) {
-//            graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 3, (int) this.y + seina + 3);
-//        } else {
-//            graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 6, (int) this.y + seina + 3);
-//        }
+        // Piirretään kasipalloon valkoinen ympyrä
+        if (this.pallonNumero == 8){
+            graphics.setColor(Color.WHITE);
+            graphics.fillOval((int) this.x + seina - this.pallonSade/2, (int) this.y + seina - this.pallonSade/2, this.pallonSade, this.pallonSade);
+        }
+        
+        // Piirretään pallojen numerot
+        graphics.setColor(Color.BLACK);
+        if (this.pallonNumero < 10 && this.pallonNumero != 0) {
+            graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 3, (int) this.y + seina + 3);
+        } else if (this.pallonNumero != 0){
+            graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 6, (int) this.y + seina + 3);
+        }
 
     }
     

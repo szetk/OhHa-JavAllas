@@ -4,7 +4,6 @@
  */
 package allas.gui;
 
-import allas.domain.Pallo;
 import allas.peli.Peli;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,7 +27,7 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-      
+
         switch (this.peli.getPelitilanne()) {
             case 0:
                 return;
@@ -39,7 +38,6 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
                 }
                 break;
             case 2:
-//                System.out.println("klikkauksen koordinaatit: " + (e.getX() -9) + " " + (e.getY() -30));
                 this.peli.asetaLyonninSuunta();
                 break;
             case 3:
@@ -67,9 +65,16 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        /*
+         * Hiiren koordinaateista vähennettävät numerot 9 ja 30 korjaavat
+         * ikkunan aiheuttaman virheen koordinaateissa. Tämä toimii ainakin
+         * Windows 7:lla hyvin, ja Ubuntussa kohtuullisesti. Parempi menetelmä
+         * on työjonossa. Pelaamisen kannalta ei synny haittaa, sillä lyönnin 
+         * suunta valitaan käyttäjälle piirretyn viivan mukaisesti.
+         */
         double eX = e.getX() - 9;
         double eY = e.getY() - 30;
-        
+
         switch (this.peli.getPelitilanne()) {
             case 0:
                 return;
@@ -79,6 +84,8 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
             case 2:
                 break;
             case 3:
+                return;
+            case 4:
                 return;
         }
         this.peli.setHiirenPaikka((int) eX, (int) eY);

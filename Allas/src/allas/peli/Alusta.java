@@ -18,24 +18,24 @@ import java.util.Random;
 public class Alusta {
 
     private ArrayList<Pallo> pallot;
-    private int leveys; // Pöydän koko
-    private int pituus;
-    private int seina; // Seinän paksuus
+    private int poydanLeveys; // Pöydän koko
+    private int poydanPituus;
+    private int seinanPaksuus; // Seinän paksuus
     private int pallonSade; // Pallon säde
     private int pussinSade; // Pussin säde
     private double kitka; // Kitkakerroin
     private Random arpoja;
 
-    public Alusta(int pituus, int leveys, int seina, int pallonSade, int pussinSade) {
+    public Alusta(int poydanPituus, int poydanLeveys, int seinanPaksuus, int pallonSade, int pussinSade) {
 //        this.peli = peli;
-//        this.pituus = this.peli.getPituus();
-//        this.leveys = this.peli.getLeveys();
+//        this.poydanPituus = this.peli.getpoydanPituus();
+//        this.poydanLeveys = this.peli.getpoydanLeveys();
 //        this.pallonSade = this.peli.getPallonSade();
-//        this.seina = this.peli.getSeina();
+//        this.seinanPaksuus = this.peli.getseinanPaksuus();
         this.pallot = new ArrayList<>();
-        this.leveys = leveys;
-        this.pituus = pituus;
-        this.seina = seina;
+        this.poydanLeveys = poydanLeveys;
+        this.poydanPituus = poydanPituus;
+        this.seinanPaksuus = seinanPaksuus;
         this.pallonSade = pallonSade;
         this.pussinSade = pussinSade;
         this.kitka = 0.03;
@@ -52,7 +52,7 @@ public class Alusta {
      * @return
      */
     public void generoiPallot() {
-        this.pallot.add(new Pallo(this.pituus / 8, this.leveys / 2, 0, this.pallonSade)); // Lyöntipallo eli kivi
+        this.pallot.add(new Pallo(this.poydanPituus / 8, this.poydanLeveys / 2, 0, this.pallonSade)); // Lyöntipallo eli kivi
         int pallonNro;
 
         int i = 1;
@@ -107,19 +107,19 @@ public class Alusta {
         if (pallo.etaisyys(0, 0) <= this.pussinSade) {
             return 1; // Ylävasen
         }
-        if (pallo.etaisyys(pituus / 2, 0) <= this.pussinSade) {
+        if (pallo.etaisyys(poydanPituus / 2, 0) <= this.pussinSade) {
             return 2; // Yläseinän keskimmäinen
         }
-        if (pallo.etaisyys(0, leveys) <= this.pussinSade) {
+        if (pallo.etaisyys(0, poydanLeveys) <= this.pussinSade) {
             return 3; // Yläoikea
         }
-        if (pallo.etaisyys(pituus, 0) <= this.pussinSade) {
+        if (pallo.etaisyys(poydanPituus, 0) <= this.pussinSade) {
             return 4; // Alavasen
         }
-        if (pallo.etaisyys(pituus / 2, leveys) <= this.pussinSade) {
+        if (pallo.etaisyys(poydanPituus / 2, poydanLeveys) <= this.pussinSade) {
             return 5; // Alaseinän keskimmäinen
         }
-        if (pallo.etaisyys(pituus, leveys) <= this.pussinSade) {
+        if (pallo.etaisyys(poydanPituus, poydanLeveys) <= this.pussinSade) {
             return 6; // Alaoikea
         }
         return 0;
@@ -133,7 +133,7 @@ public class Alusta {
      */
     public void poistaPelista(Pallo pallo) { // Siirretään pallo pois pelipöydältä "hyllylle"
         pallo.setX(pallo.getPallonNumero() * 2 * this.pallonSade);
-        pallo.setY(this.leveys + 2 * this.seina);
+        pallo.setY(this.poydanLeveys + 2 * this.seinanPaksuus);
     }
     
     /**
@@ -205,9 +205,9 @@ public class Alusta {
             pallo.setX(this.pallonSade); // Siirretään pallo kohtaan, jossa se ei enää törmää seinään (eipähän törmää samalla kertaa useampaa kertaa samaan seinään)
             return true;
 
-        } else if (pallo.getX() >= this.pituus - this.pallonSade) { // Oikea seinä
+        } else if (pallo.getX() >= this.poydanPituus - this.pallonSade) { // Oikea seinä
             pallo.setVx(-1 * pallo.getVx());
-            pallo.setX(this.pituus - this.pallonSade);
+            pallo.setX(this.poydanPituus - this.pallonSade);
             return true;
 
         } else if (pallo.getY() <= 0 + this.pallonSade) { // Yläseinä
@@ -216,9 +216,9 @@ public class Alusta {
             return true;
 
 
-        } else if (pallo.getY() > this.leveys - this.pallonSade) { // Alaseinä
+        } else if (pallo.getY() > this.poydanLeveys - this.pallonSade) { // Alaseinä
             pallo.setVy(-1 * pallo.getVy());
-            pallo.setY(this.leveys - this.pallonSade);
+            pallo.setY(this.poydanLeveys - this.pallonSade);
             return true;
         }
         return false;
@@ -298,20 +298,20 @@ public class Alusta {
         return this.kitka;
     }
 
-    public int getPituus() {
-        return this.pituus;
+    public int getPoydanPituus() {
+        return this.poydanPituus;
     }
 
     public int getPallonSade() {
         return this.pallonSade;
     }
 
-    public int getLeveys() {
-        return this.leveys;
+    public int getPoydanLeveys() {
+        return this.poydanLeveys;
     }
 
-    public int getSeina() {
-        return this.seina;
+    public int getSeinanPaksuus() {
+        return this.seinanPaksuus;
     }
 
     public int getPussinSade() {

@@ -1,6 +1,5 @@
 package allas.gui;
 
-import allas.peli.Alusta;
 import allas.peli.Peli;
 import java.awt.*;
 import javax.swing.*;
@@ -53,8 +52,8 @@ public class Kayttoliittyma implements Runnable {
     @Override
     public void run() {
         this.frame = new JFrame("Allaspeli");
-        this.frame.setPreferredSize(new Dimension(this.peli.getAlusta().getPituus() + this.peli.getAlusta().getSeina() * 2 + this.peli.getAlusta().getPallonSade(),
-                this.peli.getAlusta().getLeveys() + 6 * this.peli.getAlusta().getSeina()));
+        this.frame.setPreferredSize(new Dimension(this.peli.getAlusta().getPoydanPituus() + this.peli.getAlusta().getSeinanPaksuus() * 2 + this.peli.getAlusta().getPallonSade(),
+                this.peli.getAlusta().getPoydanLeveys() + 6 * this.peli.getAlusta().getSeinanPaksuus()));
 
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,7 +67,7 @@ public class Kayttoliittyma implements Runnable {
         return this.frame;
     }
 
-    public Paivitettava getPaivitettava() {
+    public Poyta getPoyta() {
         return this.poyta;
     }
 }

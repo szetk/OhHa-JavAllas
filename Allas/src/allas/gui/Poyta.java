@@ -4,7 +4,6 @@ import allas.peli.Alusta;
 import allas.peli.Peli;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
@@ -13,7 +12,7 @@ import javax.swing.JPanel;
  *
  * @author Sami
  */
-public class Poyta extends JPanel implements Paivitettava {
+public class Poyta extends JPanel {
 
     private Peli peli;
     private int pituus;
@@ -27,9 +26,9 @@ public class Poyta extends JPanel implements Paivitettava {
     public Poyta(Peli peli) {
         this.peli = peli;
         Alusta alusta = peli.getAlusta();
-        this.pituus = alusta.getPituus();
-        this.leveys = alusta.getLeveys();
-        this.seina = alusta.getSeina();
+        this.pituus = alusta.getPoydanPituus();
+        this.leveys = alusta.getPoydanLeveys();
+        this.seina = alusta.getSeinanPaksuus();
         this.reijanKoko = alusta.getPussinSade();
         super.setBackground(Color.GREEN);
     }
@@ -69,7 +68,6 @@ public class Poyta extends JPanel implements Paivitettava {
         this.peli.piirra(graphics); // piiretään pallot
     }
 
-    @Override
     public void paivita() {
         super.repaint();
     }
