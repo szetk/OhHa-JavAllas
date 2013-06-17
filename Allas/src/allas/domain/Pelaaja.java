@@ -1,6 +1,13 @@
 package allas.domain;
 
-
+/**
+ * Tämä luokka kuvaa pelaajaa bijlardipelissä. Pelaajia on pelissä kaksi, joista
+ * toinen on vuorossa ja toinen ei. Pelaajalla on nimi, maalattu pussi, ja
+ * mahdollisesti valittuna palloryhmäksi isot tai pienet. Pelaaja-oliota
+ * hallitsee luokka Peli.
+ *
+ * @author Sami
+ */
 public class Pelaaja {
 
     private String nimi; // Pelaajan nimi, lähinnä jatkokehittelyn varalta
@@ -9,42 +16,56 @@ public class Pelaaja {
 //    private boolean vuorossa; // Kertoo onko pelaaja vuorossa tällä hetkellä
     private boolean palloRyhmaValittu; // Tämä on true, mikäli pelissä on valittu palloryhmät, ei tarvita jos boolean voi olla null
 
+    /**
+     * Pelaajan konstruktori. Pelaajalla ei aluksi ole valittua palloryhmää eikä
+     * maalattua pussia (palloRyhmaValittu = false, maalattuPussi = 0).
+     */
     public Pelaaja() {
         this.palloRyhmaValittu = false;
         this.maalattuPussi = 0;
     }
-    
-        
-    public boolean onOma(int pallonNumero){
-        if (!this.palloRyhmaValittu){
+
+    /**
+     * Tämä metodi tarkastaa kuuluuko pelaajan palloihin pallo, jonka numero on
+     * annettu parametrinä.
+     *
+     * @param pallonNumero Tarkasteltavan pallon numero
+     * @return Palautetaan true, jos annettu pallon numero kuuluu pelaajan
+     * palloryhmään ja muutoin false.
+     */
+    public boolean onOma(int pallonNumero) {
+        if (!this.palloRyhmaValittu) {
             return true;
         }
-        if(this.hasIsotPallot && pallonNumero >= 8){
+        if (this.hasIsotPallot && pallonNumero >= 8) {
             return true;
-        } if (!this.hasIsotPallot && pallonNumero <= 8){
+        }
+        if (!this.hasIsotPallot && pallonNumero <= 8) {
             return true;
         }
         return false;
     }
 
-
-//    public void setVuorossa(Boolean totuusarvo) {
-//        this.vuorossa = totuusarvo;
-//    }
-    public void setHasIsotPallot(Boolean hasIsotPallot){
+    /**
+     * Tämä metodi asettaa pelaajalle palloryhmän. Kun palloryhmä valitaan,
+     * asetetaan muuttujan palloRyhmaValittu arvoksi true.
+     *
+     * @param hasIsotPallot
+     */
+    public void setHasIsotPallot(Boolean hasIsotPallot) {
         this.hasIsotPallot = hasIsotPallot;
         this.palloRyhmaValittu = true;
     }
-    
-    public void setMaalattuPussi(int pussi){
+
+    public void setMaalattuPussi(int pussi) {
         this.maalattuPussi = pussi;
     }
-    
-    public void setNimi(String nimi){
+
+    public void setNimi(String nimi) {
         this.nimi = nimi;
     }
-    
-    public String getNimi(){
+
+    public String getNimi() {
         return this.nimi;
     }
 
@@ -52,15 +73,11 @@ public class Pelaaja {
         return this.palloRyhmaValittu;
     }
 
-//    public boolean getVuorossa() {
-//        return this.vuorossa;
-//    }
-    
-    public int getMaalattuPussi(){
+    public int getMaalattuPussi() {
         return this.maalattuPussi;
     }
 
-    public boolean hasIsotPallot(){
+    public boolean hasIsotPallot() {
         return this.hasIsotPallot;
     }
 }

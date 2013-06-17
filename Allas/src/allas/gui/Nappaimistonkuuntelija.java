@@ -10,25 +10,34 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
+ * Tämä luokka vastaa näppäimistön painalluksisat biljardipelissä. Toimintaa
+ * säätelee Peli-luokan olio.
  *
- * @author Samiǥ
+ * @author Sami
  */
 public class Nappaimistonkuuntelija implements KeyListener {
 
     private Peli peli;
 
+    /**
+     * Konstruktori, joka saa parametrinä Peli-luokan olion, johon
+     * näppäimistönkuuntelija on kytketty.
+     *
+     * @param peli Kytketty Peli-luokan olio
+     */
     public Nappaimistonkuuntelija(Peli peli) {
         this.peli = peli;
     }
 
+    /**
+     * Näppäimiä painaessa tarkastetaan pelintilanne, ennen kuin päätetään
+     * toiminnasta. Näppäimet i ja p toimivat vain tietyissä tilanteissa.
+     * Numerot 1-6 toimivat kaikissa tilanteissa.
+     *
+     * @param ke Näppäintapahtuma
+     */
     @Override
     public void keyPressed(KeyEvent ke) {
-//        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-//            this.peli.lueSyote();
-//        }
-//        if (ke.getKeyCode() == KeyEvent.VK_F6) {
-//            this.peli = new Peli(1000, 500, 40, 15, 25);
-//        }
 
         switch (ke.getKeyCode()) {
             case KeyEvent.VK_I:
@@ -52,28 +61,24 @@ public class Nappaimistonkuuntelija implements KeyListener {
                 this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
                 break;
             case KeyEvent.VK_2:
-                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(2);
-                    this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(2);
+                this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
                 break;
             case KeyEvent.VK_3:
                 this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(3);
-                    this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
                 break;
             case KeyEvent.VK_4:
-                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(4);
-                    this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(4);
+                this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
                 break;
             case KeyEvent.VK_5:
-                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(5);
-                    this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
+                this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(5);
+                this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
                 break;
             case KeyEvent.VK_6:
-                    this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(6);
-                    this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
-                break;
-                case KeyEvent.VK_F6:;
-//                    this.peli.aloitaAlusta();
-//                this.peli.setPelitilanne(4);
+                this.peli.getVuorossaOlevaPelaaja().setMaalattuPussi(6);
+                this.peli.tulosta("Maalattu pussi " + this.peli.getVuorossaOlevaPelaaja().getMaalattuPussi());
                 break;
         }
     }

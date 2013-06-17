@@ -5,7 +5,10 @@ import allas.peli.Alusta;
 import allas.peli.Peli;
 
 public class Main {
-
+/**
+ * Main method which starts the program
+ * @param args 
+ */
     public static void main(String[] args) {
         // TODO code application logic here
         Peli peli = new Peli(new Alusta(1000, 500, 40, 15, 25)); //pituus, leveys, seinä, pallon säde, pussin säde

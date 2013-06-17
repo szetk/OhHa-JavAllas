@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.Random;
 
 /**
+ * Tämä luokka käsittelee biljardipelin tärkeimmät fysikaaliset
+ * toiminnallisuudet. Alustan tehtäviin kuuluu mm. pallojen generointi,
+ * säilyttäminen ja liiketilojen muutosten laskeminen.
  *
  * @author Sami
  */
@@ -26,19 +29,24 @@ public class Alusta {
     private double kitka; // Kitkakerroin
     private Random arpoja;
 
+    /**
+     * Alustan konstruktori. Tätä kutsutaan main-metodista, jossa määritellään
+     * pelin tärkeimmät parametrit.
+     *
+     * @param poydanPituus Pelipöydän pituus
+     * @param poydanLeveys Pelipöydän leveys
+     * @param seinanPaksuus Pelipöydän seinien (vallien) paksuus
+     * @param pallonSade Biljardipallon säde
+     * @param pussinSade Kulma- ja sivupussien säde
+     */
     public Alusta(int poydanPituus, int poydanLeveys, int seinanPaksuus, int pallonSade, int pussinSade) {
-//        this.peli = peli;
-//        this.poydanPituus = this.peli.getpoydanPituus();
-//        this.poydanLeveys = this.peli.getpoydanLeveys();
-//        this.pallonSade = this.peli.getPallonSade();
-//        this.seinanPaksuus = this.peli.getseinanPaksuus();
         this.pallot = new ArrayList<>();
         this.poydanLeveys = poydanLeveys;
         this.poydanPituus = poydanPituus;
         this.seinanPaksuus = seinanPaksuus;
         this.pallonSade = pallonSade;
         this.pussinSade = pussinSade;
-        this.kitka = 0.03;
+        this.kitka = 0.04;
         this.arpoja = new Random();
     }
 
@@ -76,11 +84,12 @@ public class Alusta {
             vaihdaPallo(pallo15);
         }
     }
-    
-        /**
-     * Tarkastaa ovatko kaikki pudonneetPallot paikallaan;
+
+    /**
+     * Tarkastaa ovatko kaikki pudonneetPallot paikallaan.
      *
-     * @return
+     * @return Palautetaan true, mikäli kaikki pallot ovat paikoillaan, muutoin
+     * false.
      */
     public boolean pallotPaikoillaan() {
         for (Pallo pallo : this.pallot) {
@@ -94,52 +103,54 @@ public class Alusta {
         return true;
     }
 
-    
-        /**
+    /**
      * Tarkastaa putoaako parametrinä saatu pallo johonkin pussiin, ja palauttaa
      * pussia vastaavan numeron. Mikäli pallo ei putoa pussiin, palautetaan arvo
      * 0. Pussit ovat numeroitu vasemmalta oikealle ja ylhäältä alas.
      *
-     * @param pallo
-     * @return
+     * @param pallo Parametrinä saadaan pallo, jonka putoamista tarkastetaan
+     * @return Palautetaan 0, jos pallo ei putoa pussiin, muutoin pussin numero,
+     * joka on kokonaisluku välillä 1-6.
      */
     public int putoaaPussiin(Pallo pallo) {
         if (pallo.etaisyys(0, 0) <= this.pussinSade) {
-            return 1; // Ylävasen
+            return 1; // Ylävasen pussi
         }
         if (pallo.etaisyys(poydanPituus / 2, 0) <= this.pussinSade) {
-            return 2; // Yläseinän keskimmäinen
+            return 2; // Yläseinän keskimmäinen pussi
         }
         if (pallo.etaisyys(0, poydanLeveys) <= this.pussinSade) {
-            return 3; // Yläoikea
+            return 3; // Yläoikea pussi
         }
         if (pallo.etaisyys(poydanPituus, 0) <= this.pussinSade) {
-            return 4; // Alavasen
+            return 4; // Alavasen pussi
         }
         if (pallo.etaisyys(poydanPituus / 2, poydanLeveys) <= this.pussinSade) {
-            return 5; // Alaseinän keskimmäinen
+            return 5; // Alaseinän keskimmäinen pussi
         }
         if (pallo.etaisyys(poydanPituus, poydanLeveys) <= this.pussinSade) {
-            return 6; // Alaoikea
+            return 6; // Alaoikea pussi
         }
-        return 0;
+        return 0; // Palautetaan 0, jos pallo ei putoa mihinkään pussiin.
     }
-    
-        /**
+
+    /**
      * Poistaa pussiin pudonneen pallon pelistä. Tarkalleen ottaen pallo
-     * siirretään pöydän ulkopuolelle, jossa pelaajat näkevät pudonneet pudonneetPallot.
+     * siirretään pöydän ulkopuolelle, jossa pelaajat näkevät pudonneet
+     * pudonneetPallot.
      *
-     * @param pallo
+     * @param pallo Parametrinä saadaan pallo, joka poistetaan pelistä.
      */
     public void poistaPelista(Pallo pallo) { // Siirretään pallo pois pelipöydältä "hyllylle"
         pallo.setX(pallo.getPallonNumero() * 2 * this.pallonSade);
         pallo.setY(this.poydanLeveys + 2 * this.seinanPaksuus);
     }
-    
+
     /**
      * Tämä metodi asettaa palloille koordinaatit. Pallot sisältävä lista on jo
-     * valmiiksi järjestetty sopivaan järjestykseen.
+     * valmiiksi järjestetty sopivaan järjestykseen generoiPallot()-metodissa.
      *
+     * @see #generoiPallot()
      * @param rivinEkaX Pallokolmion keulassa olevan pallon x-koordinaatti
      * @param rivinEkaY Pallokolmion keulassa olevan pallon y-koordinaatti
      */
@@ -162,8 +173,11 @@ public class Alusta {
 
     /**
      * Tämä metodi vaihtaa alkuasetelmassa kulmapallon, mikäli se on tarpeen.
+     * Alkuasetelmassa takakulmissa tulee olla eri palloryhmiin kuuluvat pallot.
      *
-     * @param pallo15 Parametrinä saadaan kulmapallon numero
+     * @param pallo15 Parametrinä saadaan kulmapallon numero, jota käytetään
+     * metodissa.
+     * @see #generoiPallot()
      */
     public void vaihdaPallo(int pallo15) {
         while (true) {
@@ -177,11 +191,14 @@ public class Alusta {
     }
 
     /**
-     * Tarkastaa osuvatko parametrinä saadut pudonneetPallot toisiinsa.
+     * Tarkastaa osuvatko parametrinä saadut pallot toisiinsa. Mikäli pallot
+     * törmäävät, kutsutaan metodia laskeTormaysPalloille()-joka laskee
+     * palloille tulevat liiketilat.
      *
      * @param pallo1 Tarkasteltava pallo
      * @param pallo2 Toinen tarkasteltava pallo
-     * @return
+     * @return Palautetaan true, mikäli pallot törmäävät, muutoin false.
+     * @see #laskeTormaysPalloille(allas.domain.Pallo, allas.domain.Pallo)
      */
     public boolean osuuPalloon(Pallo pallo1, Pallo pallo2) {
         if (pallo1.etaisyys(pallo2.getX(), pallo2.getY()) <= 2 * this.pallonSade) {
@@ -194,10 +211,14 @@ public class Alusta {
     }
 
     /**
-     * Tarkastaa osuuko pallo johonkin pöydän seinään.
+     * Tarkastaa osuuko parametrinä saatu pallo johonkin pöydän seinistä, sekä
+     * laskee tarvittaessa pallolle tulevan liiketilan. Törmäävä pallo
+     * siirretään pois seinän sisästä, mikäli näin pääsee käymään. Tällä
+     * estetään pallon törmääminen toistumiseen, sekä hyvin pitkälti seinän
+     * penetraatio.
      *
      * @param pallo Tarkasteltava pallo
-     * @return
+     * @return Palautetaan true, mikäli pallo törmää seinään, muutoin false.
      */
     public boolean osuuSeinaan(Pallo pallo) {
         if (pallo.getX() <= 0 + this.pallonSade) { // Vasen seinä
@@ -226,9 +247,12 @@ public class Alusta {
 
     /**
      * Laskee törmäyksen parametrinä saaduille, toisiinsa törmääville palloille
+     * käyttämällä Vektoreita apunaan. Palloja siirretään toisistaan pois päin
+     * sen verran, että ne eivät enää törmää toistamiseen, ja lasketaan uudet
+     * nopeudet.
      *
-     * @param pallo1
-     * @param pallo2
+     * @param pallo1 Parametrinä saatu pallo
+     * @param pallo2 Parametrinä saatu toinen pallo
      */
     public void laskeTormaysPalloille(Pallo pallo1, Pallo pallo2) {
         Vektori delta = (pallo1.getPaikkavektori().erotus(pallo2.getPaikkavektori()));// Pallojen välinen etaisyysvektori 
@@ -251,11 +275,12 @@ public class Alusta {
     }
 
     /**
-     * Hakee pudonneetPallot sisältävästä listasta pallon, jonka numero on sama
-     * kuin parametrinä saatu numero.
+     * Hakee pallot sisältävästä listasta pallon, jonka numero on sama kuin
+     * parametrinä saatu numero.
      *
-     * @param EtsittavanPallonNumero
-     * @return
+     * @param EtsittavanPallonNumero Parametrinä saadaan numero, jota vastaava
+     * pallo haetaan
+     * @return Palautetaan pallo, jonka numero vastaa parametrinä saatua numeroa
      */
     public Pallo haePallo(int EtsittavanPallonNumero) {
         for (Pallo pallo : this.pallot) {
@@ -267,11 +292,11 @@ public class Alusta {
     }
 
     /**
-     * Tarkastaa onko pelaajan kaikki pudonneetPallot 8-palloa lukuunottamatta
-     * pussissa.
+     * Tarkastaa onko pelaajan kaikki pallot 8-palloa lukuunottamatta pussissa.
      *
-     * @param pelaaja
-     * @return
+     * @param pelaaja Parametrinä saadaan pelaaja, jonka palloja tarkastellaan
+     * @return Palautetaan true, mikäli pelaajan pallot 8-palloa lukuunottamatta
+     * on pussissa, muutoin false.
      */
     public boolean pallotPussissa(Pelaaja pelaaja) {
         if (pelaaja.hasIsotPallot()) {

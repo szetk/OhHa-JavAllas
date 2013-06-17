@@ -8,7 +8,8 @@ import javax.swing.JPanel;
 
 /**
  * Tämä luokka on käyttöjärjestelmän piirtoalusta. Tämä sisältää pöydän
- * piirtämisen.
+ * piirtämisen ja päivittämisen. Tämä luokka kutsuu päivitettäessä Peli-luokan
+ * piirtävää metodia.
  *
  * @author Sami
  */
@@ -19,10 +20,14 @@ public class Poyta extends JPanel {
     private int leveys;
     private int seina;
     private int reijanKoko;
-/**
- * 
- * @param alusta Tätä käytetään tarvittavien mittojen noutamiseen, jotta piirretään pelin mukainen pöytä
- */
+
+    /**
+     * Poyta-luokan konstruktori. Parametrinä saadaan Peli-luokan olio, josta
+     * lypsetään tietoja pöydän piirtämistä varten.
+     *
+     * @param peli Tätä käytetään tarvittavien mittojen noutamiseen, jotta
+     * piirretään pelin mukainen pöytä
+     */
     public Poyta(Peli peli) {
         this.peli = peli;
         Alusta alusta = peli.getAlusta();
@@ -33,11 +38,16 @@ public class Poyta extends JPanel {
         super.setBackground(Color.GREEN);
     }
 
+    /**
+     * Tämä metodi piirtää pöydän parametrinä saatuun grafiikkaan.
+     *
+     * @param graphics Parametrinä saadaan grafiikka.
+     */
     @Override
     public void paintComponent(Graphics graphics) {
         graphics.setColor(Color.GRAY);
         graphics.fillRect(0, 0, this.pituus + 200, this.leveys + 200);
-        
+
         graphics.setColor(Color.ORANGE);
         graphics.fillRect(0, 0, this.pituus + 2 * this.seina, this.leveys + 2 * this.seina);
 
@@ -68,6 +78,10 @@ public class Poyta extends JPanel {
         this.peli.piirra(graphics); // piiretään pallot
     }
 
+    /**
+     * Tämä metodi piirtää pöydän uudelleen. Tätä käytetään aina kun pelissä on
+     * tapahtunut muutos tietyn aika välin jälkeen.
+     */
     public void paivita() {
         super.repaint();
     }

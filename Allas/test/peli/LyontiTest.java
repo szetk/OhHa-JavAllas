@@ -111,26 +111,6 @@ public class LyontiTest {
     }
         
     @Test
-    public void vastustajanPallotToimii(){
-        lyonti.kivenEnsimmainenOsuma = 9;
-        assertFalse(lyonti.vastustajanPalloja());
-        lyonti.add(11);
-        lyonti.add(3);
-        assertTrue(lyonti.vastustajanPalloja());
-        
-    }
-
-    @Test
-    public void vaihdaVuoroKunVastustajanPalloSisaan() {
-        lyonti.kivenEnsimmainenOsuma = 9;
-        lyonti.add(2);
-        lyonti.add(12);
-        lyonti.add(4);
-        
-        assertTrue(lyonti.vuoronVaihto());
-    }
-
-    @Test
     public void eiVaihdetaVuoroaTurhaan() {
         lyonti.kivenEnsimmainenOsuma = 11;
         lyonti.add(12);

@@ -1,5 +1,13 @@
 package allas.tools;
 
+/**
+ * Tämä luokka on vektorityökalu, jota tarvitaan biljardipelissä liiketilojen
+ * laskemiseen. Vektorilla on kaksi komponenttia, x ja y. Nämä ovat toisiaan
+ * kohtisuorassa. Luokka sisältää keskeiset vektorilaskutoimitusmetodit, sekä
+ * pituuden palauttavan metodin.
+ *
+ * @author Sami
+ */
 public class Vektori {
 
     private double x; // Vektorin x-koordinaatti
@@ -14,8 +22,8 @@ public class Vektori {
      * Laskee kyseisen vektorin ja parametrina saadun vektorin erotuksen, ja
      * palauttaa näin saadun vektorin.
      *
-     * @param a
-     * @return
+     * @param a Vektori, joka vähennetään tästä vektorista.
+     * @return Palautetaan vektoreiden erotuksena saatu vektori.
      */
     public Vektori erotus(Vektori a) {
         Vektori c = new Vektori(this.x - a.getX(), this.y - a.getY());
@@ -26,8 +34,8 @@ public class Vektori {
      * Laskee kahden vektorin pistetulon, ja palauttaa double- tyyppisen
      * skalaariarvon.
      *
-     * @param vektori
-     * @return
+     * @param vektori Vektori, jonka kanssa pistetulo lasketaan.
+     * @return Palautetaan pistetulon tulos.
      */
     public double pistetulo(Vektori vektori) {
         return this.x * vektori.getX() + this.y * vektori.getY();
@@ -36,23 +44,28 @@ public class Vektori {
     /**
      * Kertoo vektorin kertoimella
      *
-     * @param kerroin
-     * @return
+     * @param kerroin Kerroin, jolla tämä vektori kerrotaan.
+     * @return Palautetaan kerrottu vektori.
      */
     public Vektori tulo(double kerroin) {
         return new Vektori(this.x * kerroin, this.y * kerroin);
     }
 
     /**
-     *Summaa kaksi kyseiseen vektoriin parametrina saadun vektorin, ja palauttaa saadun vektorin.
-     * @param a
-     * @return
+     * Summaa kaksi kyseiseen vektoriin parametrina saadun vektorin, ja
+     * palauttaa saadun vektorin.
+     *
+     * @param a Parametrinä saadaan summattava vektori.
+     * @return Palautetaan tuloksena saatu vektori.
      */
     public Vektori summa(Vektori a) {
         Vektori c = new Vektori(this.x + a.getX(), this.y + a.getY());
         return c;
     }
-
+/**
+ * Tämä metodi tekee palauttaa tämän vektorin suuntaisen yksikkövektorin.
+ * @return Yksikkövektori, joka on tämän vektorin suuntainen.
+ */
     public Vektori normalisoi() {
         double pituus = this.pituus();
         if (pituus != 0) {
@@ -66,9 +79,9 @@ public class Vektori {
     }
 
     /**
-     * Palauttaa tämän vektorin pituuden
+     * Palauttaa tämän vektorin pituuden.
      *
-     * @return
+     * @return Palauttaa vektorin pituuden.
      */
     public double pituus() {
         return Math.sqrt(this.x * this.x + this.y * this.y);

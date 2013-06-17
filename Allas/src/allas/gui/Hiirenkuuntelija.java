@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
+ * Tämä on biljardipelin hiirenkuuntelija. Toiminta riippuu Peli-luokan oliosta,
+ * johon hiirenkuuntelija on kytketty.
  *
  * @author Sami
  */
@@ -17,6 +19,12 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
 
     private Peli peli;
 
+    /**
+     * Konstruktori, joka saa parametrinä Peli-luokan olion, johon
+     * hiirenkuuntelija on kytketty.
+     *
+     * @param peli Peli-luokan olio
+     */
     public Hiirenkuuntelija(Peli peli) {
         this.peli = peli;
     }
@@ -25,6 +33,12 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
     public void mouseClicked(MouseEvent e) {
     }
 
+    /**
+     * Tämä metodi käsittelee hiiren klikkauksia. Hiiren klikkauksen vaikutus
+     * riippuu Pelin pelitilanteessa.
+     *
+     * @param e Hiiritapahtuma
+     */
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -63,13 +77,19 @@ public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
     }
 
+    /**
+     * Tämä metodi tallentaa biljardipelin Peli-luokan olioon hiiren
+     * koordinaatit aina kun ne muuttuvat.
+     *
+     * @param e Hiiren tapahtuma
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         /*
          * Hiiren koordinaateista vähennettävät numerot 9 ja 30 korjaavat
          * ikkunan aiheuttaman virheen koordinaateissa. Tämä toimii ainakin
          * Windows 7:lla hyvin, ja Ubuntussa kohtuullisesti. Parempi menetelmä
-         * on työjonossa. Pelaamisen kannalta ei synny haittaa, sillä lyönnin 
+         * on työjonossa. Pelaamisen kannalta ei synny haittaa, sillä lyönnin
          * suunta valitaan käyttäjälle piirretyn viivan mukaisesti.
          */
         double eX = e.getX() - 9;

@@ -27,4 +27,5 @@ Päivä	Aika	Tehtävä
 13.6.	1h	Ohjelmistotekniikan menetelmiä
 14.6.	1h	Ohjelmistotekniikan menetelmiä
 15.6. 	3h	Luokkakaavio, refaktorointi, pieni muokkaus
-
+16.6.	4h	Sekvenssikaaviot
+17.6.	6h	Käyttöohjeet, sekvenssikaaviot, Javadoc, pähkäily

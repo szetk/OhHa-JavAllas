@@ -1,8 +1,8 @@
 Aihemäärittely
 
-Aihe: biljardipeli (pool = allas)
+Aihe: Biljardipeli (pool = allas)
 
-Kehitetään yksinkertainen pool-biljardipeli, jossa pelimuotona on ainakin aluksi 8-pallo. Peliä pelaa kaksi pelaajaa vuorotellen yleisten sääntöjen mukaisesti, eikä luultavasti tulla toteuttamaan tekoälyä. Ohjelmaan tulee yksinkertainen fysiikkamallinnus, jolla lasketaan pallojen liikeratoja. Liikkeisiin vaikuttaa ainakin törmäykset reunoihin ja palloihin sekä pöydän pinnan ja pallon välinen kitkakerroin. Myös muita vaikuttajia voidaan tarvittaessa lisätä ohjelman toiminnallisuuteen. Käyttöliittymä tulee olemaan graafinen ja kaksiulotteinen, joka on kuvattu ylhäältä. Mitä luultavimmin ohjelma ei tule myöskään sisältämään ääniefektejä eikä pallojen pyörimisen, liidun tai muiden vastaavien seikkojen tuomia vaikutuksia.
+Kehitetään yksinkertainen pool-biljardipeli, jossa pelimuotona on 8-pallo. Peliä pelaa kaksi pelaajaa vuorotellen yleisten sääntöjen mukaisesti, eikä tekoälyä kehitetä. Ohjelmaan tulee yksinkertainen fysiikkamallinnus, jolla lasketaan pallojen liikeratoja. Liikkeisiin vaikuttaa ainakin törmäykset reunoihin ja palloihin sekä pöydän pinnan ja pallon välinen kitkakerroin. Myös muita vaikuttajia voidaan tarvittaessa lisätä ohjelman toiminnallisuuteen, kuten pallojen pyöriminen. Käyttöliittymä tulee olemaan graafinen ja kaksiulotteinen, joka on kuvattu ylhäältä. Toistaiseksi peli ei tule sisältämään ääniefektejä tai tekstuureja.
 
 
 Käyttäjät: pelaaja 1, pelaaja 2
@@ -14,4 +14,6 @@ Pelaajan toiminnot:
 - lyöntipallon asettaminen pöydälle (tarvittaessa)
 - lyönnin suunnan valitseminen
 - lyönnin voimakkuuden valitseminen
-- pelin keskeytys
+- lyöminen
+- pussin maalaaminen
+- palloryhmän valitseminen

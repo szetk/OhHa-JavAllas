@@ -5,7 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Tämä luokka kuvaa biljardipelin palloa, jolla on paikka, nopeus, säde ja numero. Lisäksi pallo voi olla pussitettuna.
+ * Tämä luokka kuvaa biljardipelin palloa, jolla on paikka, nopeus, säde ja
+ * numero. Lisäksi pallo voi olla pussitettuna tai pöydällä (mukana pelissä).
  *
  * @author Sami
  */
@@ -18,13 +19,14 @@ public class Pallo {
     private int pallonNumero; // pallon numero
     private int pallonSade;
     private boolean pussissa; // Kertoo onko pallo pussissa, vai vielä pelissä
-/**
- * 
- * @param x Pallon paikan x-koordinaatti
- * @param y Pallon paikan y-koordinaatti
- * @param pallonNumero Pallon numero
- * @param pallonSade Pallon säde
- */
+
+    /**
+     *
+     * @param x Pallon paikan x-koordinaatti
+     * @param y Pallon paikan y-koordinaatti
+     * @param pallonNumero Pallon numero
+     * @param pallonSade Pallon säde
+     */
     public Pallo(double x, double y, int pallonNumero, int pallonSade) {
         this.x = x;
         this.y = y;
@@ -44,9 +46,11 @@ public class Pallo {
     }
 
     /**
-     * Tämä metodi hidastaa pallon liikettä.
-     * @see #jarrutaNegatiivista(double, double) 
-     * @see #jarrutaPositiivista(double, double) 
+     * Tämä metodi hidastaa pallon liikettä kitkan vaikutuksesta. Liikettä
+     * hidastetaan etenemissuunnan mukaisesti.
+     *
+     * @see #jarrutaNegatiivista(double, double)
+     * @see #jarrutaPositiivista(double, double)
      *
      * @param kitka Pallon nopeutta vähentävä kitka
      */
@@ -75,12 +79,17 @@ public class Pallo {
         }
 
     }
-/**
- * Tämä metodi jarruttaa pallon liikenopeuden komponentin arvoa, kun komponentti on negatiivinen. Tätä käytetään sekä x- että y-koordinaateille.
- * @param v Vähennettävä nopeuden komponentti
- * @param deltaV Vähennyksen suuruus
- * @return Palauttaa nopeudnek omponentin vähennetyn arvon
- */
+
+    /**
+     * Tämä metodi jarruttaa pallon liikenopeuden komponentin arvoa, kun
+     * komponentti on negatiivinen. Tätä käytetään sekä x- että
+     * y-koordinaateille.
+     *
+     * @param v Vähennettävä nopeuden komponentti
+     * @param deltaV Vähennyksen suuruus
+     * @return Palauttaa nopeudnek omponentin vähennetyn arvon
+     * @see #jarruta(double)
+     */
     public double jarrutaNegatiivista(double v, double deltaV) {
         if (v * (-1) >= deltaV) {
             v += deltaV;
@@ -89,12 +98,17 @@ public class Pallo {
         }
         return v;
     }
-/**
- * Tämä metodi jarruttaa pallon liikenopeuden komponentin arvoa, kun komponentti on positiivinen. Tätä käytetään sekä x- että y-koordinaateille.
- * @param v Vähennettävä nopeuden komponentti
- * @param deltaV Vähennyksen suuruus
- * @return Palauttaa nopeudnek omponentin vähennetyn arvon
- */
+
+    /**
+     * Tämä metodi jarruttaa pallon liikenopeuden komponentin arvoa, kun
+     * komponentti on positiivinen. Tätä käytetään sekä x- että
+     * y-koordinaateille.
+     *
+     * @param v Vähennettävä nopeuden komponentti
+     * @param deltaV Vähennyksen suuruus
+     * @return Palauttaa nopeudnek omponentin vähennetyn arvon
+     * @see #jarruta(double)
+     */
     public double jarrutaPositiivista(double v, double deltaV) {
         if (v >= deltaV) {
             v -= deltaV;
@@ -105,7 +119,8 @@ public class Pallo {
     }
 
     /**
-     * Tämä metodi laskee pallon ja parametrinä saadun pisteen välisen etäisyyden.
+     * Tämä metodi laskee pallon ja parametrinä saadun pisteen välisen
+     * etäisyyden Pythagoraan lauseen avulla.
      *
      * @param x Pisteen x-koordinaatti.
      * @param y Pisteen y-koordinaatti.
@@ -119,10 +134,9 @@ public class Pallo {
         return (double) Math.sqrt(deltax + deltay);
     }
 
-
     /**
-     * Tämä metodi tarkastaa liikkuuko pallo. 
-     * 
+     * Tämä metodi tarkastaa liikkuuko pallo.
+     *
      * @return Palautetaan true, jos pallo liikkuu ja false, mikäli ei.
      */
     public boolean liikkuuko() {
@@ -134,13 +148,16 @@ public class Pallo {
         }
         return false;
     }
-    
+
     /**
-     * Tämä metodi piirtää pallon parametrinä saatuun grafiikkaan. Pienet pallot ovat vihreitä ja isot sinisiä. 8-pallo on musta ja lyöntipallo valkoinen.
+     * Tämä metodi piirtää pallon parametrinä saatuun grafiikkaan. Pienet pallot
+     * ovat vihreitä ja isot sinisiä. 8-pallo on musta ja lyöntipallo valkoinen.
+     * Palloille piirretään myös numerot ja kasipallolle valkoinen ympyrä.
+     *
      * @param graphics Grafiikka, johon piirretään
      * @param seina Peli-luokan seinän paksuus tarvitaan paikan laskemiseen.
      */
-        public void piirra(Graphics graphics, int seina) {
+    public void piirra(Graphics graphics, int seina) {
         graphics.setColor(Color.BLACK);
         if (this.pallonNumero == 0) {
             graphics.setColor(Color.WHITE);
@@ -148,30 +165,29 @@ public class Pallo {
             graphics.setColor(Color.GREEN);
         } else if (this.pallonNumero > 8) {
             graphics.setColor(Color.BLUE);
-        } 
+        }
         graphics.fillOval((int) this.x + seina - this.pallonSade, (int) this.y + seina - this.pallonSade, 2 * this.pallonSade, 2 * this.pallonSade);
 
         // Piirretään kasipalloon valkoinen ympyrä
-        if (this.pallonNumero == 8){
+        if (this.pallonNumero == 8) {
             graphics.setColor(Color.WHITE);
-            graphics.fillOval((int) this.x + seina - this.pallonSade/2, (int) this.y + seina - this.pallonSade/2, this.pallonSade, this.pallonSade);
+            graphics.fillOval((int) this.x + seina - this.pallonSade / 2, (int) this.y + seina - this.pallonSade / 2, this.pallonSade, this.pallonSade);
         }
-        
+
         // Piirretään pallojen numerot
         graphics.setColor(Color.BLACK);
         if (this.pallonNumero < 10 && this.pallonNumero != 0) {
             graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 3, (int) this.y + seina + 3);
-        } else if (this.pallonNumero != 0){
+        } else if (this.pallonNumero != 0) {
             graphics.drawString(this.pallonNumero + "", (int) this.x + seina - 6, (int) this.y + seina + 3);
         }
 
     }
-    
+
     public boolean getPussissa() {
         return this.pussissa;
     }
 
-   
     public int getPallonNumero() {
         return pallonNumero;
     }
@@ -212,8 +228,8 @@ public class Pallo {
     public void setY(double y) {
         this.y = y;
     }
-    
-     public void setPussissa(Boolean pussissa) {
+
+    public void setPussissa(Boolean pussissa) {
         this.pussissa = pussissa;
     }
 
@@ -234,11 +250,4 @@ public class Pallo {
         this.vx = vektori.getX();
         this.vy = vektori.getY();
     }
-
-    /**
-     * Tämä metodi piirtää pallon parametrina saatuun grafiikkaan. Lyöntipallo
-     * on valkoinen, 8-pallo musta. Muista palloista pienet ovat vihreitä ja suuret sinisiä.
-     *
-     * @param graphics Parametrina saatu grafiikka.
-     */
 }

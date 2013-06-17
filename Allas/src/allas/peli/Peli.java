@@ -10,6 +10,15 @@ import java.util.Scanner;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
+/**
+ * Tämä luokka halinnoi biljardipelin muita luokkia ja koko pelin toimintaa ja
+ * kulkua. Peli on vastuussa pelin pyörittämisestä, sen säännöistä,
+ * vuoronjaosta, ajastamisesta ja käyttäjäsyötteiden hallinnasta. Peli on
+ * suorassa yhteydessä luokkiin Pelaaja, Lyonti ja Alusta, mutta ei Pallo-luokan
+ * olioihin.
+ *
+ * @author Sami
+ */
 public class Peli extends Timer {
 
     private Alusta alusta; // Alusta, sisältää fysiikan, pallot yms.
@@ -29,8 +38,13 @@ public class Peli extends Timer {
     public int hiirenY;
     public JLabel tekstikentta; // Käyttöliittymän tekstikenttä, johon tulostetaan (Huomaa metodi tulosta())
     private Lyonti lyonti; // Sisältää tiedot aina viimeisimmästä lyönnistä
-    private Scanner lukija;
 
+    /**
+     * Konstruktori, joka kerää tarvittavia parametrejä Alusta-tyyppsiestä
+     * oliosta.
+     *
+     * @param alusta Parametrinä saadaan alusta parametrejä varten.
+     */
     public Peli(Alusta alusta) {
         super(100, null);
         this.alusta = alusta;
@@ -53,7 +67,8 @@ public class Peli extends Timer {
     }
 
     /**
-     * Tämä metodi käynnistää ohjelman.
+     * Tämä metodi käynnistää ohjelman ja hallinnoi pelitilanteita. Tätä metodia
+     * kutsutaan main()-metodista, ja tämän päättyessä peli päättyy.
      *
      */
     public void aja() {
@@ -67,7 +82,7 @@ public class Peli extends Timer {
             if (this.pelitilanne == 4) { // Pelitilanne 4 lopettaa pelin.
                 return;
             }
-            nuku(10);
+            nuku(1000 / 60);
             if (this.alusta.pallotPussissa(this.vuorossaOlevaPelaaja) && this.vuorossaOlevaPelaaja.getMaalattuPussi() == 0) {
                 tulosta("Maalaa pussi painamalla numeroa 1-6");
             }
@@ -76,8 +91,6 @@ public class Peli extends Timer {
                 pyorita();
                 tarkastaLyonti();
             }
-
-
             if (this.alusta.getPallot().get(0).getPussissa()) { // Jos lyöntipallo on pussissa, täytyy se asettaa pöydäle (pelitilanne 1)
                 this.pelitilanne = 1;
 
@@ -98,7 +111,8 @@ public class Peli extends Timer {
 
     /**
      * Tämä metodi päättää, että mitä tehdään pelaajan suorittaman lyönnin
-     * jälkeen.
+     * jälkeen. Suuressa merkityksessä on tuorein lyönti pelissä, jota käytetään
+     * apuna lyönnin arvioinnissa.
      */
     public void tarkastaLyonti() {
         if (this.alusta.getPallot().get(5).getPussissa()) { // Jos 8-pallo on pussissa, ei tarvitse tarkastaa tilaa
@@ -136,7 +150,7 @@ public class Peli extends Timer {
     public void pyorita() {
         tulosta(""); // Tyhjennetään tekstikenttä
         do {
-            nuku(10); // Virkistystaajuus
+            nuku(1000 / 60); // Virkistystaajuus
             aikaHyppy(); // Liikutetaan palloja yhden iteraation verran
             this.poyta.paivita(); // Päivitetään piirtoalusta
             if (this.alusta.pallotPaikoillaan()) { // Jos pudonneetPallot eivät enää liiku, voidaan lopettaa liikuttaminen
@@ -148,7 +162,10 @@ public class Peli extends Timer {
     }
 
     /**
-     * Tämä metodi liikuttaa palloja yhden iteraation verran.
+     * Tämä metodi liikuttaa palloja yhden iteraation verran. Metodi liikuttaa
+     * yhtä palloa kerrallaan, hidastaa sen nopeutta kitkan mukaan ja tarkastaa
+     * putoamisen ja törmäykset. Mikäli putoaminen tai törmäys tapahtuu, niiden
+     * käsittely alkaa täältä.
      *
      * @see #pyorita()
      */
@@ -182,10 +199,11 @@ public class Peli extends Timer {
 
     /**
      * Tämä metodi tarkastaa osuuko pallo seinään tai johonkin palloon.
-     * Tarvittaessa kutsutaan törmäyksien laskemisesta vastaavia metodeja.
+     * Tarvittaessa kutsutaan törmäyksien laskemisesta vastaavia metodeja, jotka
+     * ovat alustassa.
      *
      * @param pallo1 Tarkasteltava pallo
-     * @return
+     * @return Palautetaan true, jos pallo osuu johonkin, muutoin false.
      */
     public boolean osuuko(Pallo pallo1) {
         if (this.alusta.osuuSeinaan(pallo1)) {
@@ -211,49 +229,54 @@ public class Peli extends Timer {
     }
 
     /**
-     * Tämä metodi piirtää pudonneetPallot ja muut tilpehöörit parametrinä
-     * saatuun grafiikkaan.
+     * Tämä metodi piirtää pallot ja muut tilpehöörit(lyöntivoimapalkki, lyönnin
+     * suuntaviiva) parametrinä saatuun grafiikkaan.
      *
-     * @param g
+     * @param graphics Parametrinä saadaan grafiikka, johon piirretään.
      */
-    public void piirra(Graphics g) {
-        g.setColor(Color.WHITE);
-        if (this.aloitustilanne) { // Aloitustilanteessa piirretään viiva, jonka takaa on lyötävä (eteenpäin)
-            g.drawLine(this.pituus / 4, this.seina, this.pituus / 4, this.seina + this.leveys);
+    public void piirra(Graphics graphics) {
+        if (this.aloitustilanne) {
+            graphics.setColor(Color.WHITE);
+            graphics.drawLine(this.pituus / 4, this.seina, this.pituus / 4, this.seina + this.leveys);
         }
-        g.setColor(Color.BLACK); // Piirretään viiva hiiren osoittimen ja lyöntipallon välille tähtäystä varten sitä tarvittaessa
+
+        // Piirretään viiva hiiren osoittimen ja lyöntipallon välille tähtäystä varten sitä tarvittaessa
+
         if (this.pelitilanne == 2 || this.pelitilanne == 3) {
-            g.drawLine((int) this.alusta.getPallot().get(0).getX() + this.seina, (int) this.alusta.getPallot().get(0).getY() + this.seina, this.hiirenX, this.hiirenY);
+            graphics.setColor(Color.BLACK);
+            graphics.drawLine((int) this.alusta.getPallot().get(0).getX() + this.seina, (int) this.alusta.getPallot().get(0).getY() + this.seina, this.hiirenX, this.hiirenY);
         }
 
-        if (this.pelitilanne == 3) { // Pelaajan valitessa lyöntivoimakkuutta piirretään lyöntivoiman suuuruutta kuvaava palkki, joka kasvaa ja pienenee ajan kulkiessa. 
-            g.drawRect(this.pituus * 2 / 3 - 1, this.leveys + 2 * this.seina, (int) (10 * this.lyonti.getLyontivoima()[2]), 2 * this.pallonSade);
-            g.setColor(Color.RED);
-            g.fillRect(this.pituus * 2 / 3, this.leveys + 2 * this.seina + 1, (int) (10 * this.lyonti.getLyontivoima()[0]), 2 * this.pallonSade - 1);
+        // Pelaajan valitessa lyöntivoimakkuutta piirretään lyöntivoiman suuuruutta kuvaava palkki, joka kasvaa ja pienenee ajan kulkiessa. 
+        if (this.pelitilanne == 3) {
+            graphics.drawRect(this.pituus * 2 / 3 - 1, this.leveys + 2 * this.seina, (int) (6 * this.lyonti.getLyontivoima()[2]), 2 * this.pallonSade);
+            graphics.setColor(Color.RED);
+            graphics.fillRect(this.pituus * 2 / 3, this.leveys + 2 * this.seina + 1, (int) (6 * this.lyonti.getLyontivoima()[0]), 2 * this.pallonSade - 1);
         }
 
-        g.setColor(Color.BLACK); // Piirretään vuorossa olevan pelaajan tärkeimmät tiedot
-        g.drawString("Vuorossa", this.pituus - 100, (int) (this.leveys + 2.5 * this.seina));
-        g.drawString(this.vuorossaOlevaPelaaja.getNimi(), this.pituus - 100, this.leveys + 3 * this.seina);
+        // Piirretään vuorossa olevan pelaajan tärkeimmät tiedot
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Vuorossa", this.pituus - 100, (int) (this.leveys + 2.5 * this.seina));
+        graphics.drawString(this.vuorossaOlevaPelaaja.getNimi(), this.pituus - 100, this.leveys + 3 * this.seina);
         if (this.vuorossaOlevaPelaaja.getPalloRyhmaValittu()) {
             if (this.vuorossaOlevaPelaaja.hasIsotPallot()) {
-                g.drawString("Isot pallot (siniset)", this.pituus - 100, (int) (this.leveys + 3.5 * this.seina));
+                graphics.drawString("Isot pallot (siniset)", this.pituus - 100, (int) (this.leveys + 3.5 * this.seina));
             } else {
-                g.drawString("Pienet pallot (vihreät)", this.pituus - 100, (int) (this.leveys + 3.5 * this.seina));
+                graphics.drawString("Pienet pallot (vihreät)", this.pituus - 100, (int) (this.leveys + 3.5 * this.seina));
             }
         }
-
         // Piirretään pudonneetPallot
         for (Pallo pallo : this.alusta.getPallot()) {
-            pallo.piirra(g, this.seina);
+            pallo.piirra(graphics, this.seina);
         }
     }
 
     /**
      * Tämä metodin tarkoitus on hoitaa tilanne kun 8-pallo on lyöty pussiin.
-     * Tehtäviin kuuluu pelin kekeyttäminen ja voittajan julkistaminen.
+     * Tehtäviin kuuluu pelin kekeyttäminen ja voittajan selvittäminen ja
+     * julkistaminen.
      *
-     * @param pussinNumero
+     * @param pussinNumero Numero, joka kertoo mihin pussiin pallo on pudonnut.
      */
     public void kasinPussitus(int pussinNumero) {
         // Jos vuorossa oleva pelaaja häviää
@@ -280,7 +303,7 @@ public class Peli extends Timer {
     }
 
     /**
-     * Tämä metodi vaihtaa vuoron.
+     * Tämä metodi vaihtaa vuoron pelaajalta toiselle.
      */
     public void vuoronVaihto() {
         Pelaaja temp = this.vuorossaOlevaPelaaja;
@@ -288,6 +311,13 @@ public class Peli extends Timer {
         this.vastustaja = temp;
     }
 
+    /**
+     * Tämä metodi tulostaa rivin joka kehottaa pelaajaa valitsemaan pallo
+     * ryhmän, sekä valmistaa ohjelman vastaanottamaan käyttäjän syötteen
+     * palloryhmän valitsemiseksi. Tämän jälkeen näppäin i tai p, valitsevat
+     * palloryhmän vuorossa olevalle pelaajall. Näppäin i tarkottaa isoja
+     * palloja ja p pieniä.
+     */
     public void valitsePalloryhma() {
         tulosta("Valitse palloryhmä i/p");
         this.odottaaVastausta = true;
@@ -295,6 +325,7 @@ public class Peli extends Timer {
 
     /**
      * Tämä metodi tarkastaa onko lyöntipallo paikassa, johon sen saa asettaa.
+     * Lyöntipalloa ei voi asettaa muiden pallojen päälle.
      *
      * @return
      */
@@ -346,7 +377,7 @@ public class Peli extends Timer {
      */
     public void asetaLyonninSuunta() {
         this.lyonti = new Lyonti(this.vuorossaOlevaPelaaja, this.aloitustilanne, this.tekstikentta);
-        
+
         Vektori hiirenPaikkavektori = new Vektori(this.hiirenX - this.seina, this.hiirenY - this.seina);
 
         // Aloitustilanteesta ei saa lyödä taaksepäin
@@ -363,7 +394,8 @@ public class Peli extends Timer {
     }
 
     /**
-     * Asettaa lyönnin nopeuden ja suorittaa lyönnin.
+     * Asettaa lyönnin nopeuden ja suorittaa lyönnin. Lyönnin nopeus määräytyy
+     * lyöntivoimapalkin koon mukaan hiirtä klikattaessa.
      */
     public void asetaLyonninNopeusJaLyo() {
         // Aiemmin lyöntisuunta on valittu, ja nyt lyönnin suunta voidaan kertoa valitulla lyöntivoimalla. Nimi lyontiB valittu, jotta ei sekoiteta Lyonti-tyyppiseksi lyonti-olioksi.
@@ -431,86 +463,3 @@ public class Peli extends Timer {
         return this.alusta;
     }
 }
-
-/*
- * häviää jos kasi sisään ja on palloja ja vuoro häviää jos maalattu väärin (tai
- * ei maalattu) alotuksessa valkosta ei saa lyödä taakse jos alotuksessa menee
- * valkonen pussiin, koitetaan uusiks
- *
- * pussittamista
- *
- * käsipallo: alotuslyönnistä alle neljä koskettaa seinään
- *
- * valkonen ei törmää ekana omaan palloon mikään ei törmää valliin tai mene
- * pussiin valkonen menee pussiin jos vain kasi jäljellä, virheen tehnyt häviää
- *
- *
- * pelitilanteet: aloitustilanne lyö palloa aseta suuntavektori (jos alotus Vx <
- * 0 kielletty) aseta nopeus (aina > 0) pudonneetPallot pyörii kasi pussissa
- * faul - virhetilanne, printtaa syy
- *
- *
- * valkoisen eka osuma
- *
- * komentojen antaminen näppiksellä aina: maalaa aloita alusta kysymyksiin
- * vastaaminen
- *
- * 0 - pyörii (jatkuu) 1 - aseta valkoinen pallo 2 - aseta suuntavektori 3 -
- * aseta nopeus ja lyö 4 - kasipallo sisään
- *
- *
- *
- *
- * aloitustilanne 0/1
- *
- *
- */
-//
-//Metodeille järjestys:
-//
-//- luokka, konstruktori, uusiks alotus
-//- ajamiseen liittyvät
-//- säännöt
-//- fysiikka
-//- setterit
-//- getterit
-//
-//
-//Käytetäänkö kaikkia metodeja? 
-//
-//
-//Voisko vuoron vaihdon toteuttaa järkevämmin
-//- vuorossa oleva pelaaja peli-luokkaan?
-//
-//Nimentä:
-//- r = pallonSade
-//- n = pallonNumero
-//- pussinSade = pussinSade
-//
-//Jos toteuttais tarkennuksen, ja laittais sille bitin
-//- hae piste jossa pallo törmää johonkin
-//- piirrä pisteeseen viiva, ja pallo
-//- laske lähtökulmat / yksikkövektorit
-//
-//
-//Pallo luokassa ei varmaan tarvii muuttujaa pussissa
-//ois vaik metodi:
-//
-//public boolean getPussissa(){
-//if (this.y > this.leveys + 2*seina + this.pallonSade){
-//return true;
-//}
-//return false;
-//}
-//
-// 
-//
-//Miten erottaa peli, logiikka, säännöt, vuoron jakelu ja fysiikka
-//
-//
-//peli
-//- aja
-//
-//fyssa
-//pyorita
-//-
