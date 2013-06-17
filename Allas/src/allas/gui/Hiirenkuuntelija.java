@@ -17,6 +17,9 @@ import java.awt.event.MouseMotionListener;
  */
 public class Hiirenkuuntelija implements MouseListener, MouseMotionListener {
 
+    /**
+     * Peli-luokan olio, johon tämä Hiirenkuuntelija on kytkettynä.
+     */
     private Peli peli;
 
     /**

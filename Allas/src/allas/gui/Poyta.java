@@ -15,10 +15,25 @@ import javax.swing.JPanel;
  */
 public class Poyta extends JPanel {
 
+    /**
+     * Peli, jonka piirtoalusta tämä on.
+     */
     private Peli peli;
+    /**
+     * Pöydän pituus.
+     */
     private int pituus;
+    /**
+     * Pöydän leveys.
+     */
     private int leveys;
+    /**
+     * Pöydän seinän(vallin) paksuus.
+     */
     private int seina;
+    /**
+     * Pelin kulma- ja sivupussien säde.
+     */
     private int reijanKoko;
 
     /**

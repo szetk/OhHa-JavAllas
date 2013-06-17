@@ -20,24 +20,70 @@ import javax.swing.Timer;
  * @author Sami
  */
 public class Peli extends Timer {
-
-    private Alusta alusta; // Alusta, sisältää fysiikan, pallot yms.
-    private int leveys; // Pöydän koko
+    /**
+     * Alusta, joka sisältää fysiikan pallot yms.
+     */
+    private Alusta alusta;
+    /**
+     * Biljardipelipöydän leveys.
+     */
+    private int leveys; 
+    /**
+     * Pöydän pituus.
+     */
     private int pituus;
-    private int seina; // Seinän paksuus
-    private int pallonSade; // Pallon säde
-    private double kitka; // Kitkakerroin
-    private int pelitilanne; // Pyörii(0), aseta valkoinen pallo(1), aseta suuntavektori(2), aseta nopeus(3), kasipallo lyöty sisään (4)
+    /**
+     * Pelin seinien (vallien) paksuus.
+     */
+    private int seina; 
+    /**
+     * Pallon säde.
+     */
+    private int pallonSade; 
+    /**
+     * Pelin kitka.
+     */
+    private double kitka; 
+    /**
+     * Pelitilanne, kertoo mikä tilanne pelissä on menossa. Pelitilanteet: pyörii(0), aseta valkoinen pallo(1), aseta suuntavektori(2), aseta nopeus(3), kasipallo lyöty sisään (4).
+     */
+    private int pelitilanne; 
+    /**
+     * Graafinen piirtoalusta, pöytä, joka päivitetään kun on tapahtunut muutos.
+     */
     private Poyta poyta;
-    private Pelaaja vuorossaOlevaPelaaja; // Tällä hetkellä vuorossa oleva pelaaja, päivitetään
-    private Pelaaja vastustaja; // Pelaaja, joka ei ole tällä hetkellä vuorossa
-//    private double[] this.lyonti.getLyontivoima(); // Ensimmäinen alkio on lyönnin voima, toinen lyönnin kasvu iteraation aikana ja kolmas maksimivoima
-    public boolean odottaaVastausta; // Käytetään kontrolloimaan käyttäjän syötteitä, jotka hallinnoi Nappaimistonkuuntelija
-    private boolean aloitustilanne; // Kertoo onko menossa aloitustilanne, jossa on erikoissääntöjä voimassa
-    public int hiirenX;        // Hiiren lokaatio, joka päivitetään Hiirenkuuntelijan kautta aina muuttuessa
+    /**
+     * Pelaaja, joka on tällä hetkellä vuorossa.
+     */
+    private Pelaaja vuorossaOlevaPelaaja; 
+    /**
+     * Se pelaaja, joka ei ole tällä hetkellä vuorossa.
+     */
+    private Pelaaja vastustaja; 
+    /**
+     * Käytetään kontrolloimaan käyttäjän syötteitä, jotka hallinnoi Nappaimistonkuuntelija.
+     */
+    public boolean odottaaVastausta; 
+    /**
+     * Kertoo onko menossa aloitustilanne(true), jossa on erikoissääntöjä voimassa.
+     */
+    private boolean aloitustilanne; 
+    /**
+     * Hiiren osoittimen x-koordinaatti, joka päivitetään Hiirenkuuntelijan kautta aina muuttuessa.
+     */
+    public int hiirenX;
+     /**
+     * Hiiren osoittimen y-koordinaatti, joka päivitetään Hiirenkuuntelijan kautta aina muuttuessa.
+     */
     public int hiirenY;
-    public JLabel tekstikentta; // Käyttöliittymän tekstikenttä, johon tulostetaan (Huomaa metodi tulosta())
-    private Lyonti lyonti; // Sisältää tiedot aina viimeisimmästä lyönnistä
+    /**
+     * Käyttöliittymän tekstikenttä, johon tulostetaan (Huomaa metodi tulosta())
+     */
+    public JLabel tekstikentta;
+    /**
+     * Sisältää tiedot aina viimeisimmästä lyönnistä.
+     */
+    private Lyonti lyonti; 
 
     /**
      * Konstruktori, joka kerää tarvittavia parametrejä Alusta-tyyppsiestä
@@ -142,7 +188,7 @@ public class Peli extends Timer {
     }
 
     /**
-     * Tämä metodi liikuttaa palloja, kunnes pudonneetPallot pysähtyvät tai
+     * Tämä metodi liikuttaa palloja, kunnes pallot pysähtyvät tai
      * 8-pallo menee pussiin
      *
      * @see #aikaHyppy()
@@ -265,7 +311,7 @@ public class Peli extends Timer {
                 graphics.drawString("Pienet pallot (vihreät)", this.pituus - 100, (int) (this.leveys + 3.5 * this.seina));
             }
         }
-        // Piirretään pudonneetPallot
+        // Piirretään pallot
         for (Pallo pallo : this.alusta.getPallot()) {
             pallo.piirra(graphics, this.seina);
         }
@@ -409,7 +455,7 @@ public class Peli extends Timer {
 //        if (this.lyonti.getLyontivoima()[1] < 0) { // Vaihdetaan lyöntivoiman muutoksen suunta positiiviseksi, jotta lyöntivoiman suurus alkaa kasvaa minimistä kohti maksimia kun pelaaja aloittaa lyöntivoiman valitsemisen
 //            this.lyonti.getLyontivoima()[1] *= -1;
 //        }
-        this.pelitilanne = 0; // Siirrytään pelitilanteeseen, jossa pudonneetPallot alkavat liikkua
+        this.pelitilanne = 0; // Siirrytään pelitilanteeseen, jossa pallot alkavat liikkua
 
     }
 

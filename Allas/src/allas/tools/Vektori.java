@@ -10,8 +10,14 @@ package allas.tools;
  */
 public class Vektori {
 
-    private double x; // Vektorin x-koordinaatti
-    private double y; // Vektorin y-koordinaatti
+    /**
+     * Vektorin x-koordinaatti.
+     */
+    private double x;
+    /**
+     * Vektorin y-koordinaatti.
+     */
+    private double y;
 
     public Vektori(double x, double y) {
         this.x = x;
@@ -62,10 +68,12 @@ public class Vektori {
         Vektori c = new Vektori(this.x + a.getX(), this.y + a.getY());
         return c;
     }
-/**
- * Tämä metodi tekee palauttaa tämän vektorin suuntaisen yksikkövektorin.
- * @return Yksikkövektori, joka on tämän vektorin suuntainen.
- */
+
+    /**
+     * Tämä metodi tekee palauttaa tämän vektorin suuntaisen yksikkövektorin.
+     *
+     * @return Yksikkövektori, joka on tämän vektorin suuntainen.
+     */
     public Vektori normalisoi() {
         double pituus = this.pituus();
         if (pituus != 0) {

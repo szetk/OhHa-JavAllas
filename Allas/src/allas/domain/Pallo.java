@@ -11,14 +11,34 @@ import java.awt.Graphics;
  * @author Sami
  */
 public class Pallo {
-
-    private double x; // paikka
+    /**
+     * Pallon paikan x-koordinaatti
+     */
+    private double x;
+    /**
+     * Pallon paikan y-koordinaatti
+     */
     private double y;
-    private double vx; // vauhti
+    /**
+     * Pallon nopeuden x-koordinaatti
+     */
+    private double vx; 
+    /**
+     * Pallon nopeuden y-koordinaatti
+     */
     private double vy;
-    private int pallonNumero; // pallon numero
+    /**
+     * Pallon numero
+     */
+    private int pallonNumero;
+    /**
+     * Pallon säde
+     */
     private int pallonSade;
-    private boolean pussissa; // Kertoo onko pallo pussissa, vai vielä pelissä
+    /**
+     * Kertoo onko pallo pussissa(trie) vai vielä pelissä(false)
+     */
+    private boolean pussissa; 
 
     /**
      *

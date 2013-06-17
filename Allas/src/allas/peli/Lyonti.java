@@ -16,14 +16,39 @@ import javax.swing.JLabel;
  */
 public class Lyonti {
 
-    private Pelaaja pelaaja; // Pelaaja joka suorittaa tämän lyönnin
-    public int kivenEnsimmainenOsuma; // Pallon, johon valkoinen pallo osuu ensimmäisenä, numero
-    public int tormayksetSeinaan; // Luku seiniin osuneista törmäyksistä.
-    public ArrayList<Integer> pudonneetPallot; // Lista lyönnin aikana pudonneista palloista
-    private boolean aloitustilanne; // Onko aloitustilanne
-    private JLabel tekstikentta; // Käyttöliittymän tekstikenttä, johon tulostetaan
-    private double[] lyontivoima; // Selitetään konstruktorissa
-    private Vektori lyonninSuunta; // Vektori, jota käytetään lyönnin suunnan asettamiseen
+    /**
+     * Pelaaja, joka suorittaa tämän lyönnin
+     */
+    private Pelaaja pelaaja;
+    /**
+     * Pallon, johon valkoinen pallo osuu ensimmäisenä, numero
+     */
+    public int kivenEnsimmainenOsuma;
+    /**
+     * Luku seiniin osuneista törmäyksistä.
+     */
+    public int tormayksetSeinaan;
+    /**
+     * Lista lyönnin aikana pudonneista palloista
+     */
+    public ArrayList<Integer> pudonneetPallot;
+    /**
+     * Tämä totuusarvo kertoo, onko pelissä menossa aloitustilanne(true) vai ei
+     * (false)
+     */
+    private boolean aloitustilanne;
+    /**
+     * Käyttöliittymän tekstikenttä, johon tulostetaan
+     */
+    private JLabel tekstikentta;
+    /**
+     * Selitetään konstruktorissa
+     */
+    private double[] lyontivoima;
+    /**
+     * Vektori, jota käytetään lyönnin suunnan asettamiseen
+     */
+    private Vektori lyonninSuunta;
 
     /**
      * Konstruktori, joka saa Peli-luokan oliolta pelissä ajankohtaisia tietoja,
@@ -122,7 +147,8 @@ public class Lyonti {
      * Tämä metodi tarkastaa onko vuorossa oleva pelaaja lyönyt vastustajan
      * pallon pussiin.
      *
-     * @return Palautetaan true, mikäli pelaaja on lyönyt vastustajan pallon pussiin.
+     * @return Palautetaan true, mikäli pelaaja on lyönyt vastustajan pallon
+     * pussiin.
      */
     public Boolean vastustajanPalloja() {
         for (int pallonNumero : this.pudonneetPallot) {

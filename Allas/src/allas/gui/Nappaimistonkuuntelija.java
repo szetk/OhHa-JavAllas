@@ -17,6 +17,9 @@ import java.awt.event.KeyListener;
  */
 public class Nappaimistonkuuntelija implements KeyListener {
 
+    /**
+     * Peli-luokan olio, johon tämä Nappaimistonkuuntelija liittyy.
+     */
     private Peli peli;
 
     /**

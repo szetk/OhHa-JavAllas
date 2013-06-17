@@ -11,9 +11,21 @@ import javax.swing.*;
  */
 public class Kayttoliittyma implements Runnable {
 
+    /**
+     * Peli-luokan olio, johon tämä käyttöliittymä liittyy.
+     */
     private Peli peli;
+    /**
+     * Javan grafiikan ikkuna.
+     */
     private JFrame frame;
+    /**
+     * Käyttöliittymän piirtoalusta, johon pirretään.
+     */
     private Poyta poyta;
+    /**
+     * Käyttöliittymän tekstikenttä, johon tulostetaan viestit käyttäjälle.
+     */
     private JLabel tekstikentta;
 
     public Kayttoliittyma(Peli peli) {

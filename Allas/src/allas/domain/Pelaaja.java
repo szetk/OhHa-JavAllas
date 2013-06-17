@@ -10,11 +10,23 @@ package allas.domain;
  */
 public class Pelaaja {
 
-    private String nimi; // Pelaajan nimi, lähinnä jatkokehittelyn varalta
-    private int maalattuPussi; // Viimeksi maalatun pussin numero (1-6 numeroituna vasemmalta oikealle ja ylhäältä alas)
-    private boolean hasIsotPallot; // Kertoo onko tällä pelaajalla isot vai pienet pallot
-//    private boolean vuorossa; // Kertoo onko pelaaja vuorossa tällä hetkellä
-    private boolean palloRyhmaValittu; // Tämä on true, mikäli pelissä on valittu palloryhmät, ei tarvita jos boolean voi olla null
+    /**
+     * Pelaajan nimi, lähinnä jatkokehittelyn varalta.
+     */
+    private String nimi;
+    /**
+     * Viimeksi maalatun pussin numero (1-6 numeroituna vasemmalta oikealle ja
+     * ylhäältä alas).
+     */
+    private int maalattuPussi;
+    /**
+     * Kertoo onko tällä pelaajalla isot(true) vai pienet pallot(false).
+     */
+    private boolean hasIsotPallot;
+    /**
+     * Tämä on true, mikäli pelissä on valittu palloryhmät.
+     */
+    private boolean palloRyhmaValittu;
 
     /**
      * Pelaajan konstruktori. Pelaajalla ei aluksi ole valittua palloryhmää eikä

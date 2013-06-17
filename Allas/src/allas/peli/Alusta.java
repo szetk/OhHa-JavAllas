@@ -20,13 +20,37 @@ import java.util.Random;
  */
 public class Alusta {
 
+    /**
+     * Lista pelin palloista.
+     */
     private ArrayList<Pallo> pallot;
-    private int poydanLeveys; // Pöydän koko
+    /**
+     * Pöydän leveys.
+     */
+    private int poydanLeveys;
+    /**
+     * Pöydän pituus.
+     */
     private int poydanPituus;
-    private int seinanPaksuus; // Seinän paksuus
-    private int pallonSade; // Pallon säde
-    private int pussinSade; // Pussin säde
-    private double kitka; // Kitkakerroin
+    /**
+     * Pöydän seinän (vallin) paksuus.
+     */
+    private int seinanPaksuus;
+    /**
+     * Pallon säde. Kaikilla palloilla on sama säde.
+     */
+    private int pallonSade;
+    /**
+     * Pöydän pussien säde.
+     */
+    private int pussinSade;
+    /**
+     * Pelin kitka.
+     */
+    private double kitka;
+    /**
+     * Radom-generaattori, jota käytetään pallojen järjestyksen satunnaisuuteen.
+     */
     private Random arpoja;
 
     /**
@@ -51,11 +75,10 @@ public class Alusta {
     }
 
     /**
-     * Tämä metodi lisää peliin pudonneetPallot arvotussa järjestyksessä niin,
-     * että 8-pallo on indeksissä 5 ja lyöntipallo indeksissä 0. Lisäksi
-     * indekseissä 11 ja 15 olevien pallojen tulee olla eri palloryhmistä.
-     * Pallot asetetaan alkuasetelman kärkikolmioon tässä arvotussa
-     * järjestyksessä.
+     * Tämä metodi lisää peliin pallot arvotussa järjestyksessä niin, että
+     * 8-pallo on indeksissä 5 ja lyöntipallo indeksissä 0. Lisäksi indekseissä
+     * 11 ja 15 olevien pallojen tulee olla eri palloryhmistä. Pallot asetetaan
+     * alkuasetelman kärkikolmioon tässä arvotussa järjestyksessä.
      *
      * @return
      */
@@ -77,7 +100,7 @@ public class Alusta {
                 i++;
             }
         }
-        // Tarkistetaan vielä, että kolmion kulmissa on eli palloryhmiin kuuluvat pudonneetPallot
+        // Tarkistetaan vielä, että kolmion kulmissa on eli palloryhmiin kuuluvat pallot
         int pallo11 = this.pallot.get(11).getPallonNumero();
         int pallo15 = this.pallot.get(15).getPallonNumero();
         if ((pallo11 < 8 && pallo15 < 8) || (pallo11 > 8 && pallo15 > 8)) { // Vaihdetaan kulma pallo, mikäli kulmapallot ovaa samasta palloryhmästä
@@ -86,7 +109,7 @@ public class Alusta {
     }
 
     /**
-     * Tarkastaa ovatko kaikki pudonneetPallot paikallaan.
+     * Tarkastaa ovatko kaikki pallot paikallaan.
      *
      * @return Palautetaan true, mikäli kaikki pallot ovat paikoillaan, muutoin
      * false.
@@ -136,8 +159,7 @@ public class Alusta {
 
     /**
      * Poistaa pussiin pudonneen pallon pelistä. Tarkalleen ottaen pallo
-     * siirretään pöydän ulkopuolelle, jossa pelaajat näkevät pudonneet
-     * pudonneetPallot.
+     * siirretään pöydän ulkopuolelle, jossa pelaajat näkevät pudonneet pallot.
      *
      * @param pallo Parametrinä saadaan pallo, joka poistetaan pelistä.
      */
@@ -160,7 +182,7 @@ public class Alusta {
         int nro = 1;
 
         for (int i = 1; i < 6; i++) { // Aloituskolmiossa on viisi y-suuntaista pystyriviä, joisat ensimmäisessä on 1 pallo, toisessa 2, kolmannessa 3 jne.
-            for (int j = 0; j < i; j++) { // Yhdelle riville asetettavat pudonneetPallot
+            for (int j = 0; j < i; j++) { // Yhdelle riville asetettavat pallot
                 this.pallot.get(nro).setX(ekaX);
                 this.pallot.get(nro).setY(ekaY + j * 2 * this.pallonSade); // Rivin seuraava pallo tulee edellisen yläpuolelle y-suunnassa
                 nro++;
